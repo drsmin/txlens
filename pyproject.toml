@@ -1,0 +1,39 @@
+# 패키지 매니저는 pip + venv (D-009). 의존성은 requirements.txt 에 두고,
+# 이 파일은 패키지 메타데이터와 도구 설정만 담는다 — src/ 레이아웃을 쓰므로
+# `pip install -e .` 로 txlens 를 import 가능하게 만드는 것이 주 목적이다.
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "txlens"
+version = "0.1.0"
+description = "마이데이터 거래내역 정규화·분류 에이전트"
+requires-python = ">=3.11"
+dynamic = ["dependencies"]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+# `app/` 은 패키지가 아니라 Streamlit 진입 스크립트 묶음이다 (`streamlit run` 이 그 디렉터리를
+# sys.path 에 넣는다). 테스트도 같은 방식으로 보게 해 화면 코드가 테스트 밖에 남지 않게 한다.
+pythonpath = ["app"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests", "app"]
+
+[tool.ruff.lint.per-file-ignores]
+# 테스트 픽스처의 거래일시는 tz 없는 KST 로 둔다 (D-009 — 표준API 가 오프셋 없이 주고
+# 데이터가 한국 단일 시간대다). 규칙을 전역으로 끄지 않고 여기서만 좁게 허용한다.
+"tests/*" = ["DTZ001"]

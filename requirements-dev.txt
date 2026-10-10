@@ -1,0 +1,26 @@
+-r requirements.txt
+
+pytest>=8.0
+ruff>=0.6
+
+# 리포트 빌더 (scripts/build-report.py — docs/reports/README.md)
+python-pptx>=1.0
+python-docx>=1.1
+
+# 그래프 모양을 눈으로 확인할 때 (`graph.get_graph().draw_ascii()`).
+# 제출물 경로에는 필요 없다 — 노트북은 draw_mermaid() 를 쓴다.
+grandalf>=0.8
+
+# 화면을 눈으로 확인할 때 (`app/` 이 실제로 뜨는지 · 캡처). 원격에서 작업하면 브라우저를
+# 직접 못 보므로 이것이 유일한 확인 수단이다 — Streamlit 은 websocket 으로 그리기 때문에
+# `--screenshot` 만 있는 headless 브라우저로는 스켈레톤만 찍힌다.
+# **브라우저는 내려받지 않는다** — 시스템에 있는 Edge 를 쓴다:
+#   `p.chromium.launch(channel="msedge")` (그래서 `playwright install` 이 필요 없다).
+playwright>=1.50
+
+# 제출 노트북을 헤드리스로 실행·저장할 때 (`jupyter execute --inplace notebooks/txlens_demo.ipynb`)
+ipykernel>=6.29
+nbclient>=0.10
+
+# 데모 영상 mp4 변환 (`scripts/record-demo.py`) — 시스템 ffmpeg 없이 정적 바이너리를 딸려 온다
+imageio-ffmpeg>=0.5

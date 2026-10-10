@@ -1,0 +1,959 @@
+{
+  "model": "openai:gpt-4o-mini",
+  "verdicts": {
+    "EART": {
+      "category_l1": "food",
+      "category_l2": "food.grocery",
+      "merchant_canonical": "EART",
+      "brand": "이마트",
+      "confidence": 0.75,
+      "reasoning": "'EART' 는 유사 브랜드 'EMART' 의 형상 변화로 보인다. '이마트' 는 식료품 소매업체다.",
+      "evidence": "brand_known"
+    },
+    "G25": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "G25",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "' 편의점' 이라는 업종을 직접 가리킨다. 지점명은 삭제하여 G25를 대표명으로 설정하였다.",
+      "evidence": "keyword"
+    },
+    "GS2": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "GS2",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'GS2' 는 편의점 브랜드로 보인다.",
+      "evidence": "keyword"
+    },
+    "GS5": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "GS5",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'GS5'는 편의점을 나타내는 것으로 보인다.",
+      "evidence": "keyword"
+    },
+    "GS52": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "GS25",
+      "brand": null,
+      "confidence": 0.75,
+      "reasoning": "'GS52' 가 'GS25'와 유사하여 편의점으로 추측된다.",
+      "evidence": "brand_known"
+    },
+    "GSS25": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "GSS25",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'GSS25' 는 편의점 브랜드로 분류할 수 있다.",
+      "evidence": "keyword"
+    },
+    "KAKAOPYA*성수동카페": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "KAKAOPYA",
+      "brand": "KAKAOPYA",
+      "confidence": 0.8,
+      "reasoning": "'KAKAOPYA' 은 카페 브랜드로 보인다. '성수동카페'도 카페업종을 가리킨다.",
+      "evidence": "keyword"
+    },
+    "KAKAPAY*BEANS ROAD": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "KAKAPAY*BEANS ROAD",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'카페' 와 관련된 단어가 포함되어 있어 카페 업종으로 추정된다.",
+      "evidence": "keyword"
+    },
+    "KAKAPOAY*COUPANG": {
+      "category_l1": "shopping",
+      "category_l2": "shopping.online",
+      "merchant_canonical": "쿠팡",
+      "brand": "쿠팡",
+      "confidence": 0.9,
+      "reasoning": "'쿠팡'은 온라인 쇼핑몰의 대표적 이름으로, 'KAKAPOAY'도 유사한 형태로 보아 'KAKAOPY*쿠팡'과 연결된 것으로 판단된다.",
+      "evidence": "keyword"
+    },
+    "KAKKAOPAY*(주)연세이비인후과": {
+      "category_l1": "health",
+      "category_l2": "health.clinic",
+      "merchant_canonical": "연세이비인후과",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'이비인후과'로 의료기관임이 분명하여 '병원·의원'으로 분류할 수 있다.",
+      "evidence": "keyword"
+    },
+    "KKAAO T": {
+      "category_l1": "transport",
+      "category_l2": "transport.taxi",
+      "merchant_canonical": "KKAAO T",
+      "brand": "카카오T",
+      "confidence": 0.7,
+      "reasoning": "'KAKAO T'와 유사하게 보이며, 택시 서비스 관련으로 보인다.",
+      "evidence": "brand_known"
+    },
+    "KYCOHON": {
+      "category_l1": "food",
+      "category_l2": "food.restaurant",
+      "merchant_canonical": "KYCOHON",
+      "brand": "교촌치킨",
+      "confidence": 0.68,
+      "reasoning": "'KYCOHON' 에서 비슷한 키로 '교촌치킨'이 발견되어, 의도된 가맹점으로 추측한다.",
+      "evidence": "brand_known"
+    },
+    "KYOOB": {
+      "category_l1": "unclassified",
+      "category_l2": "unclassified.insufficient",
+      "merchant_canonical": "KYOOB",
+      "brand": null,
+      "confidence": 0.1,
+      "reasoning": "'KYOOB' 의 성격을 정확히 알 수 없어 미분류로 둡니다.",
+      "evidence": "guess"
+    },
+    "NAVEPRAY*(주)지에스리테일": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "NAVEPRAY*(주)지에스리테일",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'리테일' 의 성격상 편의점 업종으로 추정된다.",
+      "evidence": "keyword"
+    },
+    "PACYO*(주)지에스리테일": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "PACYO*(주)지에스리테일",
+      "brand": "GS25",
+      "confidence": 0.65,
+      "reasoning": "'지에스리테일' 이 편의점 GS25와 연관이 있음을 나타내는 것 같아, 편의점으로 분류하였다.",
+      "evidence": "brand_known"
+    },
+    "SG25": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "SG25",
+      "brand": "GS25",
+      "confidence": 0.7,
+      "reasoning": "'SG25'는 'GS25'와 유사하여 편의점으로 보인다.",
+      "evidence": "brand_known"
+    },
+    "SGSPAY*CU": {
+      "category_l1": "unclassified",
+      "category_l2": "unclassified.insufficient",
+      "merchant_canonical": "SGSPAY*CU",
+      "brand": null,
+      "confidence": 0.1,
+      "reasoning": "'SGSPAY*CU' 는 결제 채널과 관련이 있지만 직접적인 업종을 나타내지는 않는다. 무언가를 유추하기 어려워 미분류로 둔다.",
+      "evidence": "guess"
+    },
+    "STEP GYM": {
+      "category_l1": "health",
+      "category_l2": "health.fitness",
+      "merchant_canonical": "STEP GYM",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'GYM' 이 운동 시설임을 나타내므로 헬스 쪽으로 분류한다.",
+      "evidence": "keyword"
+    },
+    "TOOSSPAY*빈스로드": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "TOOSSPAY*빈스로드",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'빈스'는 카페 업종에서 따온 것으로 보인다.",
+      "evidence": "keyword"
+    },
+    "TOSSPAAY*(주)씨유": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "TOSSPAAY*(주)씨유",
+      "brand": "CU",
+      "confidence": 0.7,
+      "reasoning": "'CU' 는 편의점을 가리키는 것으로 보인다. 분리된 정보가 없어 지점이나 결제채널에 관한 정보는 확신할 수 없다.",
+      "evidence": "keyword"
+    },
+    "TOSSPYA*동네약국": {
+      "category_l1": "health",
+      "category_l2": "health.pharmacy",
+      "merchant_canonical": "TOSSPYA*동네약국",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'약국' 이 업종을 직접 가리킨다.",
+      "evidence": "keyword"
+    },
+    "TSARBUCKS": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "TSARBUCKS",
+      "brand": null,
+      "confidence": 0.9,
+      "reasoning": "'커피' 관련 매장이므로 카페 카테고리로 분류했다.",
+      "evidence": "keyword"
+    },
+    "교치킨": {
+      "category_l1": "food",
+      "category_l2": "food.restaurant",
+      "merchant_canonical": "교치킨",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'외식' 에 해당하는 가맹점으로 보인다.",
+      "evidence": "keyword"
+    },
+    "김밥국천": {
+      "category_l1": "food",
+      "category_l2": "food.restaurant",
+      "merchant_canonical": "김밥국천",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'김밥' 은 음식의 일종이며, '국천' 이 추가된 것을 통해 한식 식당으로 판단할 수 있다.",
+      "evidence": "keyword"
+    },
+    "김밥밥천국": {
+      "category_l1": "food",
+      "category_l2": "food.restaurant",
+      "merchant_canonical": "김밥밥천국",
+      "brand": null,
+      "confidence": 0.6,
+      "reasoning": "'김밥'과 '밥'이 포함되어 있어 외식업종으로 보인다. 그러나 불확실성이 클 수 있어 confidence를 낮게 설정하였다.",
+      "evidence": "keyword"
+    },
+    "김밥천": {
+      "category_l1": "food",
+      "category_l2": "food.restaurant",
+      "merchant_canonical": "김밥천",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'김밥' 은 외식 업종을 가리키며, 관련된 표기임이 확실하다.",
+      "evidence": "keyword"
+    },
+    "김밥천천국": {
+      "category_l1": "food",
+      "category_l2": "food.restaurant",
+      "merchant_canonical": "김밥천천국",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'김밥천천국' 은 일반적인 식당 형태를 가지며, 김밥을 주로 판매하는 음식점이다.",
+      "evidence": "keyword"
+    },
+    "김천밥국": {
+      "category_l1": "food",
+      "category_l2": "food.restaurant",
+      "merchant_canonical": "김천밥국",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'밥국'은 전통적인 음식의 일종으로 외식업종으로 분류된다.",
+      "evidence": "keyword"
+    },
+    "낙원떡집": {
+      "category_l1": "food",
+      "category_l2": "food.grocery",
+      "merchant_canonical": "낙원떡집",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'떡집' 은 일반적인 떡을 판매하는 가맹점을 의미하므로 이를 식료품업종으로 분류할 수 있다.",
+      "evidence": "keyword"
+    },
+    "네이버이*에스씨케이컴퍼니": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "네이버이*에스씨케이컴퍼니",
+      "brand": "스타벅스",
+      "confidence": 0.8,
+      "reasoning": "'에스씨케이컴퍼니'와 유사한 표기에서 스타벅스가 발견되며, '네이버이'는 PG사 명시로 보아 지점이 아니라고 판단했다.",
+      "evidence": "brand_known"
+    },
+    "다이이소": {
+      "category_l1": "shopping",
+      "category_l2": "shopping.living",
+      "merchant_canonical": "다이이소",
+      "brand": "다이소",
+      "confidence": 0.8,
+      "reasoning": "'다이소' 해당 체인 마트의 브랜드를 나타낸다.",
+      "evidence": "brand_known"
+    },
+    "데리일마트": {
+      "category_l1": "food",
+      "category_l2": "food.grocery",
+      "merchant_canonical": "데리일마트",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'마트' 가 식료품을 직접 가리킨다. '2호점'은 지점명이므로 대표명에서 제외된다.",
+      "evidence": "keyword"
+    },
+    "데일리마": {
+      "category_l1": "food",
+      "category_l2": "food.grocery",
+      "merchant_canonical": "데일리마",
+      "brand": null,
+      "confidence": 0.75,
+      "reasoning": "'마' 가 식료품·마트 업종으로 직결된다.",
+      "evidence": "keyword"
+    },
+    "동약네국": {
+      "category_l1": "health",
+      "category_l2": "health.pharmacy",
+      "merchant_canonical": "동약네국",
+      "brand": "동네약국",
+      "confidence": 0.75,
+      "reasoning": "'약국'이라는 업종이 보이며, 유사한 법인명 '동네약국'이 발견되었다.",
+      "evidence": "brand_known"
+    },
+    "메박가스": {
+      "category_l1": "transport",
+      "category_l2": "transport.fuel",
+      "merchant_canonical": "메박가스",
+      "brand": null,
+      "confidence": 0.6,
+      "reasoning": "'가스' 는 연료를 나타내는 낱말로, 관련 업종은 운송업의 일종으로 보는 것이 적당하다.",
+      "evidence": "keyword"
+    },
+    "무사": {
+      "category_l1": "shopping",
+      "category_l2": "shopping.fashion",
+      "merchant_canonical": "무사",
+      "brand": "무신사",
+      "confidence": 0.7,
+      "reasoning": "'무사' 는 '무신사' 와 비슷한 이름으로, 패션 관련 온라인 쇼핑몰일 가능성이 존재한다.",
+      "evidence": "brand_known"
+    },
+    "무신신사": {
+      "category_l1": "shopping",
+      "category_l2": "shopping.fashion",
+      "merchant_canonical": "무신신사",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'신사' 는 패션과 관련된 내용으로 보이며, '무신신사' 가 의류 판매와 관련된 브랜드로 추정된다.",
+      "evidence": "keyword"
+    },
+    "배달민의족": {
+      "category_l1": "food",
+      "category_l2": "food.delivery",
+      "merchant_canonical": "배달민의족",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'배달' 이 들어가 있어 배달 음식점으로 분류한다.",
+      "evidence": "keyword"
+    },
+    "배달의족": {
+      "category_l1": "food",
+      "category_l2": "food.delivery",
+      "merchant_canonical": "배달의족",
+      "brand": null,
+      "confidence": 0.9,
+      "reasoning": "'배달' 이라는 단어가 포함되어 있어 배달 서비스 카테고리로 분류할 수 있다.",
+      "evidence": "keyword"
+    },
+    "배의민족": {
+      "category_l1": "food",
+      "category_l2": "food.delivery",
+      "merchant_canonical": "배의민족",
+      "brand": null,
+      "confidence": 0.9,
+      "reasoning": "'배달'이라는 낱말로 인해 음식 배달 서비스로 분류된다.",
+      "evidence": "keyword"
+    },
+    "보교문고": {
+      "category_l1": "culture",
+      "category_l2": "culture.book",
+      "merchant_canonical": "보교문고",
+      "brand": "교보문고",
+      "confidence": 0.7,
+      "reasoning": "'문고' 는 서점을 의미하며, 비슷한 이름의 브랜드가 존재한다.",
+      "evidence": "brand_known"
+    },
+    "브이엘소프트": {
+      "category_l1": "unclassified",
+      "category_l2": "unclassified.insufficient",
+      "merchant_canonical": "브이엘소프트",
+      "brand": null,
+      "confidence": 0.2,
+      "reasoning": "'브이엘소프트' 는 업종을 특정할 수 있는 정보가 부족하다.",
+      "evidence": "guess"
+    },
+    "빈스드": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "빈스드",
+      "brand": null,
+      "confidence": 0.75,
+      "reasoning": "'빈스드' 는 카페의 성격을 가진 업종으로 보인다. '강남역점' 은 지점명으로 제외한다.",
+      "evidence": "keyword"
+    },
+    "빈스로": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "빈스로",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'빈스로'는 카페 업종에 성격이 맞는 것으로 보인다. '드역삼중앙점'은 지점명이므로 대표명에서 제외하였다.",
+      "evidence": "keyword"
+    },
+    "빈스스로드": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "빈스스로드",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'빈스스로드' 는 커피와 관련된 카페 업종으로 보인다.",
+      "evidence": "keyword"
+    },
+    "서교울통공사": {
+      "category_l1": "transport",
+      "category_l2": "transport.transit",
+      "merchant_canonical": "서교울통공사",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'교통' 단어와 유사한 이름에서 '서울교통공사' 를 유추했다. '공사' 는 특정 사업자를 명시하며, 관련 업종이 교통임을 고려했다.",
+      "evidence": "keyword"
+    },
+    "서울교공통사": {
+      "category_l1": "transport",
+      "category_l2": "transport.transit",
+      "merchant_canonical": "서울교공통사",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'교통' 관련 명칭이 포함되어 있어 대중교통 관련 가맹점으로 보인다.",
+      "evidence": "keyword"
+    },
+    "서울교통사공": {
+      "category_l1": "transport",
+      "category_l2": "transport.transit",
+      "merchant_canonical": "서울교통사공",
+      "brand": "서울교통공사",
+      "confidence": 0.7,
+      "reasoning": "이름이 비슷한 '서울교통공사' 가 검출되어 대중교통 관련 업체로 유추한다.",
+      "evidence": "brand_known"
+    },
+    "성수동동카페": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "성수동동카페",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'카페' 가 업종을 나타내므로 카페로 분류하였다.",
+      "evidence": "keyword"
+    },
+    "성수동카페": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "성수동카페",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'카페' 가 업종을 직접 지칭하고 있으며, 전처리에서 지점번호를 제거하였다.",
+      "evidence": "keyword"
+    },
+    "스벅스": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "스벅스",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'스벅스' 는 커피 관련 가맹점으로 보인다.",
+      "evidence": "keyword"
+    },
+    "스벅타스": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "스벅타스",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'스벅' 은 스타벅스를 의미하는 것으로 보이며, '카페' 업종과 연관이 있다.",
+      "evidence": "keyword"
+    },
+    "스에씨케이컴퍼니": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "스에씨케이컴퍼니",
+      "brand": "스타벅스",
+      "confidence": 0.65,
+      "reasoning": "상당수 유사항목이 스타벅스와 연결되므로, 카페 업종으로 추정하였다.",
+      "evidence": "brand_known"
+    },
+    "스타스벅": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "스타스벅",
+      "brand": "스타벅스",
+      "confidence": 0.85,
+      "reasoning": "'스타벅' 은 '스타벅스' 의 변형이며, 커피숍으로 명확히 추론된다.",
+      "evidence": "keyword"
+    },
+    "스텝짐": {
+      "category_l1": "health",
+      "category_l2": "health.fitness",
+      "merchant_canonical": "스텝짐",
+      "brand": "스텝짐멤버십",
+      "confidence": 0.7,
+      "reasoning": "'짐' 이 포함되어 있어 운동 관련 업종으로 보이며, 비슷한 브랜드 명을 찾았으나, 스텝짐 자체의 성격도 믿을만해서 카테고리를 부여하였다.",
+      "evidence": "keyword"
+    },
+    "신사": {
+      "category_l1": "shopping",
+      "category_l2": "shopping.fashion",
+      "merchant_canonical": "신사",
+      "brand": "무신사",
+      "confidence": 0.6,
+      "reasoning": "'신사' 를 보면 의류나 패션과 관련된 브랜드일 가능성이 높으며, '무신사'와의 유사성도 있어 쇼핑 카테고리의 패션으로 유도하였다.",
+      "evidence": "brand_known"
+    },
+    "씨씨유": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "씨씨유",
+      "brand": "CU",
+      "confidence": 0.8,
+      "reasoning": "'씨씨유'는 편의점으로 확정된 브랜드 'CU'와 유사하여 편의점 카테고리에 속한다고 판단했다.",
+      "evidence": "brand_known"
+    },
+    "씨제이올리영브": {
+      "category_l1": "health",
+      "category_l2": "health.beauty",
+      "merchant_canonical": "올리브영",
+      "brand": "올리브영",
+      "confidence": 0.8,
+      "reasoning": "'올리브영' 은 미용 업종을 직접 가리킨다. '씨제이' 부분은 지점명이나 법인명으로 보인다.",
+      "evidence": "keyword"
+    },
+    "에스씨케이컴니퍼": {
+      "category_l1": "unclassified",
+      "category_l2": "unclassified.insufficient",
+      "merchant_canonical": "에스씨케이컴니퍼",
+      "brand": null,
+      "confidence": 0.1,
+      "reasoning": "'에스씨케이컴니퍼'는 특정 업종을 나타내는 단서가 없으므로 미분류로 둔다.",
+      "evidence": "guess"
+    },
+    "에스씨케컴이퍼니": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "에스씨케컴이퍼니",
+      "brand": "에스씨케이컴퍼니",
+      "confidence": 0.75,
+      "reasoning": "'에스씨케이컴퍼니' 로 유사한 스타벅스와의 연관성을 통해 카페 업종으로 분류했다.",
+      "evidence": "brand_known"
+    },
+    "에스지웰니스": {
+      "category_l1": "health",
+      "category_l2": "health.beauty",
+      "merchant_canonical": "에스지웰니스",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'웰니스' 라는 단어에서 '미용' 분야와 연관된 서비스로 추정된다.",
+      "evidence": "keyword"
+    },
+    "에이치케이푸드시스템": {
+      "category_l1": "food",
+      "category_l2": "food.restaurant",
+      "merchant_canonical": "에이치케이푸드시스템",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'푸드시스템' 를 통해 외식 관련 업체로 추정할 수 있다.",
+      "evidence": "guess"
+    },
+    "연세이비인후과": {
+      "category_l1": "health",
+      "category_l2": "health.clinic",
+      "merchant_canonical": "연세이비인후과",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'이비인후과'는 병원 범주에 포함되며, '여의도점'은 지점으로 제외한다.",
+      "evidence": "keyword"
+    },
+    "연세이비후인과": {
+      "category_l1": "health",
+      "category_l2": "health.clinic",
+      "merchant_canonical": "연세이비후인과",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'이비인후과' 가 병원 업종에 해당하므로 클리닉으로 분류하였다.",
+      "evidence": "keyword"
+    },
+    "영어어의달인학원": {
+      "category_l1": "education",
+      "category_l2": "education.tuition",
+      "merchant_canonical": "영어어의달인학원",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'학원'은 교육 기관으로 명확히 분류된다.",
+      "evidence": "keyword"
+    },
+    "영어의달인": {
+      "category_l1": "education",
+      "category_l2": "education.tuition",
+      "merchant_canonical": "영어의달인",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'영어'와 관련된 '학원'으로 보인다.",
+      "evidence": "keyword"
+    },
+    "영어의달인학원": {
+      "category_l1": "education",
+      "category_l2": "education.tuition",
+      "merchant_canonical": "영어의달인학원",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'학원' 이 업종을 직접 가리킨다.",
+      "evidence": "keyword"
+    },
+    "영의어달인학원": {
+      "category_l1": "education",
+      "category_l2": "education.tuition",
+      "merchant_canonical": "영의어달인학원",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'학원'이라는 단어가 포함되어 있어 교육 관련 업종으로 판단된다.",
+      "evidence": "keyword"
+    },
+    "올리리브영": {
+      "category_l1": "health",
+      "category_l2": "health.beauty",
+      "merchant_canonical": "올리리브영",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'올리브영' 은 화장품 및 미용 관련 매장인 것으로 보인다.",
+      "evidence": "keyword"
+    },
+    "올브영": {
+      "category_l1": "health",
+      "category_l2": "health.beauty",
+      "merchant_canonical": "올리브영",
+      "brand": "올리브영",
+      "confidence": 0.85,
+      "reasoning": "'올브영' 은 '올리브영' 의 준말로 보이며, 미용 및 건강 관련 제품을 판매하는 매장이다.",
+      "evidence": "brand_known"
+    },
+    "우리동네세탁": {
+      "category_l1": "unclassified",
+      "category_l2": "unclassified.insufficient",
+      "merchant_canonical": "우리동네세탁",
+      "brand": null,
+      "confidence": 0.15,
+      "reasoning": "'세탁' 이라는 단어가 구체적인 업종을 가리키지 않아 미분류로 분류했다.",
+      "evidence": "guess"
+    },
+    "우아형한제들": {
+      "category_l1": "food",
+      "category_l2": "food.delivery",
+      "merchant_canonical": "우아형한제들",
+      "brand": "배달의민족",
+      "confidence": 0.85,
+      "reasoning": "'우아형한제들'은 '배달의민족'의 법인명으로 보인다.",
+      "evidence": "brand_known"
+    },
+    "울서교통공사": {
+      "category_l1": "transport",
+      "category_l2": "transport.transit",
+      "merchant_canonical": "울서교통공사",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'교통공사' 로 대중교통 관련 기관임이 보인다.",
+      "evidence": "keyword"
+    },
+    "유": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "유",
+      "brand": "CU",
+      "confidence": 0.6,
+      "reasoning": "'편의점' 관련 카테고리에 부합하는 여러 후보가 존재하나, 유는 '씨유'와 같아 보인다.",
+      "evidence": "keyword"
+    },
+    "유씨": {
+      "category_l1": "unclassified",
+      "category_l2": "unclassified.insufficient",
+      "merchant_canonical": "(주)유씨",
+      "brand": null,
+      "confidence": 0.15,
+      "reasoning": "업종을 유추할 만한 단서가 없어 미분류로 둔다.",
+      "evidence": "guess"
+    },
+    "을지로호 프": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.alcohol",
+      "merchant_canonical": "을지로호 프",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'호프' 는 주로 주점과 관련이 있으며, '프' 는 생맥주 전문점을 뜻할 수 있다.",
+      "evidence": "keyword"
+    },
+    "을지로호프": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.alcohol",
+      "merchant_canonical": "을지로호프",
+      "brand": null,
+      "confidence": 0.75,
+      "reasoning": "'호프'는 주류를 제공하는 업종의 일종으로 보인다.",
+      "evidence": "keyword"
+    },
+    "이마마트": {
+      "category_l1": "food",
+      "category_l2": "food.grocery",
+      "merchant_canonical": "이마마트",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'마트'라는 단어가 포함되어 있어 식료품·마트 업종으로 분류할 수 있다.",
+      "evidence": "keyword"
+    },
+    "이트마": {
+      "category_l1": "food",
+      "category_l2": "food.grocery",
+      "merchant_canonical": "이트마",
+      "brand": "이마트",
+      "confidence": 0.7,
+      "reasoning": "'이마트'와 유사한 점이 있어, 식료품과 관련된 가맹점일 것으로 추정된다.",
+      "evidence": "brand_known"
+    },
+    "제이디에컴퍼니": {
+      "category_l1": "transport",
+      "category_l2": "transport.taxi",
+      "merchant_canonical": "제이디에컴퍼니",
+      "brand": null,
+      "confidence": 0.5,
+      "reasoning": "'택시'라는 단서가 명시되어 있지 않지만, 결제채널에서 유사한 성격을 추측하여 운송 카테고리에 포함시킨다.",
+      "evidence": "guess"
+    },
+    "제이디에프컴컴퍼니": {
+      "category_l1": "unclassified",
+      "category_l2": "unclassified.insufficient",
+      "merchant_canonical": "제이디에프컴컴퍼니",
+      "brand": null,
+      "confidence": 0.1,
+      "reasoning": "업종을 추론할 단서가 전혀 없어서 미분류로 둡니다.",
+      "evidence": "guess"
+    },
+    "제이디에프컴퍼니": {
+      "category_l1": "unclassified",
+      "category_l2": "unclassified.insufficient",
+      "merchant_canonical": "제이디에프컴퍼니",
+      "brand": null,
+      "confidence": 0.1,
+      "reasoning": "'제이디에프컴퍼니' 는 법인 형태의 표기로 보이며 업종 관련 정보가 전혀 없다.",
+      "evidence": "guess"
+    },
+    "주)쿠팡": {
+      "category_l1": "shopping",
+      "category_l2": "shopping.online",
+      "merchant_canonical": "주)쿠팡",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'쿠팡' 은 온라인 쇼핑몰로 확인되며, 따라서 쇼핑 카테고리에 포함된다.",
+      "evidence": "keyword"
+    },
+    "주서)울교통공사": {
+      "category_l1": "transport",
+      "category_l2": "transport.transit",
+      "merchant_canonical": "주서)울교통공사",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'교통' 관련 단어가 포함되어 있어 대중교통 관련 기관으로 판단된다.",
+      "evidence": "keyword"
+    },
+    "주씨)유": {
+      "category_l1": "transport",
+      "category_l2": "transport.fuel",
+      "merchant_canonical": "(주씨)유",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'주유'라는 업종과 연결될 수 있는 표기가 있다.",
+      "evidence": "keyword"
+    },
+    "주씨유": {
+      "category_l1": "transport",
+      "category_l2": "transport.fuel",
+      "merchant_canonical": "주씨유",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'씨유'는 주유소를 뜻하므로 교통 관련 유통업체로 본다.",
+      "evidence": "keyword"
+    },
+    "주아)성다이소": {
+      "category_l1": "shopping",
+      "category_l2": "shopping.living",
+      "merchant_canonical": "주아)성다이소",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'다이소' 가 주로 생활용품을 공급하는 점을 고려할 때, 잡화 관련 업종으로 보인다.",
+      "evidence": "keyword"
+    },
+    "주우리동네세탁": {
+      "category_l1": "unclassified",
+      "category_l2": "unclassified.insufficient",
+      "merchant_canonical": "주우리동네세탁",
+      "brand": null,
+      "confidence": 0.15,
+      "reasoning": "'세탁' 이 업종을 가리키는 단어지만, 명확한 카테고리는 찾을 수 없다.",
+      "evidence": "guess"
+    },
+    "주주)씨유": {
+      "category_l1": "food",
+      "category_l2": "food.convenience",
+      "merchant_canonical": "씨유",
+      "brand": "CU",
+      "confidence": 0.9,
+      "reasoning": "'편의점' 카테고리에 해당하며, '씨유'는 CU 브랜드로 인식된다.",
+      "evidence": "keyword"
+    },
+    "주주)카카오모빌리티": {
+      "category_l1": "transport",
+      "category_l2": "transport.taxi",
+      "merchant_canonical": "카카오모빌리티",
+      "brand": "카카오",
+      "confidence": 0.8,
+      "reasoning": "'모빌리티' 는 교통과 관련된 업체이며, '택시' 서비스가 포함되므로 교통업종으로 본다. 브랜드는 카카오다.",
+      "evidence": "keyword"
+    },
+    "카오T": {
+      "category_l1": "transport",
+      "category_l2": "transport.taxi",
+      "merchant_canonical": "카오T",
+      "brand": "카카오T",
+      "confidence": 0.85,
+      "reasoning": "'카오T' 는 카카오의 택시 호출 서비스로 확인되므로 택시 업종으로 분류했다.",
+      "evidence": "brand_known"
+    },
+    "카오카모빌리티": {
+      "category_l1": "transport",
+      "category_l2": "transport.taxi",
+      "merchant_canonical": "카오카모빌리티",
+      "brand": "카카오T",
+      "confidence": 0.8,
+      "reasoning": "'모빌리티' 관련 서비스로, 유사한 브랜드 '카카오모빌리티'를 통해 교통 관련 업종으로 판단했다.",
+      "evidence": "brand_known"
+    },
+    "카오페이_TWOSOME": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "카오페이_TWOSOME",
+      "brand": null,
+      "confidence": 0.75,
+      "reasoning": "'카페' 관련 단어가 포함되어 있어 카페 업종으로 추정된다.",
+      "evidence": "keyword"
+    },
+    "카카T": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "카카T",
+      "brand": null,
+      "confidence": 0.6,
+      "reasoning": "'카카' 혹은 '커피' 가 들어있어 카페 업종이 연상된다.",
+      "evidence": "keyword"
+    },
+    "카카오빌모리티": {
+      "category_l1": "transport",
+      "category_l2": "transport.taxi",
+      "merchant_canonical": "카카오빌모리티",
+      "brand": "카카오T",
+      "confidence": 0.7,
+      "reasoning": "'모빌리티' 는 운송과 관련이 있으며, 유사한 브랜드로 '카카오T'가 확인되었다.",
+      "evidence": "brand_known"
+    },
+    "카카오페이넷플릭스": {
+      "category_l1": "culture",
+      "category_l2": "culture.content",
+      "merchant_canonical": "카카오페이넷플릭스",
+      "brand": "넷플릭스",
+      "confidence": 0.9,
+      "reasoning": "'넷플릭스' 는 콘텐츠 제공업체이며, 카카오는 결제수단과 관련된 키워드다. 둘의 조합은 콘텐츠 카테고리 내에서 이해할 수 있다.",
+      "evidence": "brand_known"
+    },
+    "카카오페이배_달의민족": {
+      "category_l1": "food",
+      "category_l2": "food.delivery",
+      "merchant_canonical": "달의민족",
+      "brand": "카카오페이",
+      "confidence": 0.85,
+      "reasoning": "'달의민족' 은 배달 음식 서비스로 보이며, '카카오페이' 는 결제 채널이다.",
+      "evidence": "keyword"
+    },
+    "카카오페이서_울교통공사": {
+      "category_l1": "transport",
+      "category_l2": "transport.transit",
+      "merchant_canonical": "카카오페이서_울교통공사",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'교통' 에 해당하는 서비스로 보이며, 울교통공사는 대중교통과 관련이 있을 것이다.",
+      "evidence": "keyword"
+    },
+    "카카카오페이_카카오T": {
+      "category_l1": "transport",
+      "category_l2": "transport.taxi",
+      "merchant_canonical": "카카카오페이_카카오T",
+      "brand": null,
+      "confidence": 0.8,
+      "reasoning": "'카카오T' 는 택시 호출 서비스로, 택시 업종을 직접 가리킨다.",
+      "evidence": "keyword"
+    },
+    "카카페오이_SK에너지": {
+      "category_l1": "transport",
+      "category_l2": "transport.fuel",
+      "merchant_canonical": "카카페오이_SK에너지",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'SK에너지'는 주유소를 나타내는 표기이며, 카카페오이는 서비스명으로 판단된다.",
+      "evidence": "keyword"
+    },
+    "쿠쿠팡": {
+      "category_l1": "shopping",
+      "category_l2": "shopping.online",
+      "merchant_canonical": "쿠쿠팡",
+      "brand": "쿠팡",
+      "confidence": 0.8,
+      "reasoning": "'쿠팡'과 유사하며 온라인 쇼핑업체로 판단된다.",
+      "evidence": "brand_known"
+    },
+    "쿠팡우": {
+      "category_l1": "shopping",
+      "category_l2": "shopping.online",
+      "merchant_canonical": "쿠팡우",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'쿠팡' 은 온라인 쇼핑과 관련된 브랜드로, '우' 는 추가 정보일 뿐이다.",
+      "evidence": "keyword"
+    },
+    "타벅스": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.coffee",
+      "merchant_canonical": "타벅스",
+      "brand": "스타벅스",
+      "confidence": 0.75,
+      "reasoning": "'타벅스'는 '스타벅스'의 변형으로 추측되며 커피 관련 업종으로 보인다.",
+      "evidence": "brand_known"
+    },
+    "투플썸레이스": {
+      "category_l1": "cafe",
+      "category_l2": "cafe.bakery",
+      "merchant_canonical": "투썸플레이스",
+      "brand": "투썸플레이스",
+      "confidence": 0.7,
+      "reasoning": "비슷한 이름을 가진 '투썸플레이스'가 카페 관련 브랜드로 유사도가 높다.",
+      "evidence": "brand_known"
+    },
+    "한끼밥밥상": {
+      "category_l1": "food",
+      "category_l2": "food.restaurant",
+      "merchant_canonical": "한끼밥밥상",
+      "brand": null,
+      "confidence": 0.7,
+      "reasoning": "'밥' 과 '식사' 관련 키워드와 함께 '밥상' 이라는 낱말이 있는 식당으로 추정된다.",
+      "evidence": "keyword"
+    },
+    "한빛주차": {
+      "category_l1": "transport",
+      "category_l2": "transport.parking",
+      "merchant_canonical": "한빛주차",
+      "brand": null,
+      "confidence": 0.85,
+      "reasoning": "'주차'라는 낱말이 업종을 직접 가리킨다. '성수점'은 지점이므로 제외했다.",
+      "evidence": "keyword"
+    }
+  }
+}

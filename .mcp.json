@@ -1,0 +1,9 @@
+{
+  "//": "TxLens 로컬 MCP 서버 (5주차). 저장소에 두면 Claude Code 가 이 프로젝트를 열 때 자동으로 붙는다. stdio 라 네트워크로 나가지 않는다 — 합성 데이터 전용 원칙(D-005)과 같은 이유로 조회도 로컬에 머문다.",
+  "mcpServers": {
+    "txlens": {
+      "command": ".venv/bin/python",
+      "args": ["-m", "txlens.mcp_server", "--rules", "rules/v1.yaml"]
+    }
+  }
+}

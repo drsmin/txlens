@@ -1,0 +1,100 @@
+# 거래 카테고리 택소노미 (2단계)
+#
+# 코드에 하드코딩하지 않고 여기 두는 이유: ① LLM 프롬프트에 주입하고 ② 분류 결과 검증에도
+# 쓰기 때문이다. 두 곳에 각각 적으면 반드시 어긋난다.
+#
+# `id` 는 코드·Enum·라벨 데이터가 참조하는 안정 키다. **한 번 쓴 id 는 바꾸지 않는다**
+# (골드셋 라벨이 id 로 저장되므로 바꾸면 라벨이 전부 무효가 된다). 표시 문구만 label 에서 고친다.
+# src/txlens/schemas.py 의 Enum 과 동기화되어야 하며, tests/test_taxonomy_sync.py 가 검사한다.
+
+version: 1
+
+l1:
+  - id: food
+    label: 식비
+    l2:
+      - { id: food.restaurant,   label: 외식 }
+      - { id: food.delivery,     label: 배달 }
+      - { id: food.grocery,      label: 식료품·마트 }
+      - { id: food.convenience,  label: 편의점 }
+
+  - id: cafe
+    label: 카페/간식
+    l2:
+      - { id: cafe.coffee,       label: 카페 }
+      - { id: cafe.bakery,       label: 베이커리·디저트 }
+      - { id: cafe.alcohol,      label: 주류 }
+
+  - id: transport
+    label: 교통
+    l2:
+      - { id: transport.transit, label: 대중교통 }
+      - { id: transport.taxi,    label: 택시 }
+      - { id: transport.fuel,    label: 주유·충전 }
+      - { id: transport.parking, label: 주차·통행료 }
+      - { id: transport.vehicle, label: 차량정비·렌트 }
+
+  - id: housing
+    label: 주거/통신
+    l2:
+      - { id: housing.rent,      label: 월세·관리비 }
+      - { id: housing.utility,   label: 공과금 }
+      - { id: housing.telecom,   label: 통신비 }
+
+  - id: health
+    label: 의료/건강
+    l2:
+      - { id: health.clinic,     label: 병원·의원 }
+      - { id: health.pharmacy,   label: 약국 }
+      - { id: health.fitness,    label: 운동·헬스 }
+      - { id: health.beauty,     label: 미용·personal care }
+
+  - id: shopping
+    label: 쇼핑
+    l2:
+      - { id: shopping.fashion,  label: 의류·패션 }
+      - { id: shopping.digital,  label: 전자·가전 }
+      - { id: shopping.living,   label: 생활·잡화 }
+      - { id: shopping.online,   label: 온라인종합몰 }
+
+  - id: culture
+    label: 문화/여가
+    l2:
+      - { id: culture.content,   label: 콘텐츠·OTT }
+      - { id: culture.travel,    label: 여행·숙박 }
+      - { id: culture.hobby,     label: 취미·레저 }
+      - { id: culture.book,      label: 도서 }
+
+  - id: education
+    label: 교육
+    l2:
+      - { id: education.tuition,       label: 학원·수업 }
+      - { id: education.material,      label: 교재 }
+      - { id: education.certification, label: 시험·자격 }
+
+  - id: tax_insurance
+    label: 보험/세금
+    l2:
+      - { id: tax_insurance.insurance, label: 보험료 }
+      - { id: tax_insurance.tax,       label: 세금·공과 }
+      - { id: tax_insurance.pension,   label: 연금 }
+
+  - id: finance
+    label: 금융
+    l2:
+      - { id: finance.transfer,  label: 이체 }
+      - { id: finance.fee,       label: 수수료 }
+      - { id: finance.interest,  label: 이자 }
+      - { id: finance.loan,      label: 대출상환 }
+      - { id: finance.cash,      label: 현금인출 }
+
+  # 미분류는 실패가 아니라 **정당한 답**이다. 정보가 없으면 억지로 추측하지 않는다.
+  # l2 로 이유를 구분해 리포트에서 "못 했다" 와 "안 했다" 를 나눈다.
+  - id: unclassified
+    label: 미분류
+    l2:
+      - { id: unclassified.pg_masked,    label: PG경유_실가맹점불명 }
+      - { id: unclassified.insufficient, label: 정보부족 }
+
+# 구독·이상지출은 카테고리가 아니라 **별도 축**이다 (blueprint §3.3 ⑥).
+# 같은 거래가 "culture.content + 구독" 일 수 있으므로 여기에 넣지 않는다.

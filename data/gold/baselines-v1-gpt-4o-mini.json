@@ -1,0 +1,282 @@
+[
+  {
+    "result": {
+      "label": "B · LLM만",
+      "dictionary_version": 0,
+      "tx_total": 8969,
+      "tx_classified": 8619,
+      "tx_excluded": 350,
+      "excluded_reasons": {
+        "취소_상계": 175,
+        "취소_거래": 175
+      },
+      "overall": {
+        "name": "전체",
+        "labeled": 8619,
+        "unlabeled": 0,
+        "accuracy_l1": 0.8919828286344124,
+        "accuracy_l2": 0.855899756352245,
+        "coverage": 0.868430212321615,
+        "unmatched_rate": 0.051398074022508414,
+        "pg_masked_rate": 0.08017171365587655,
+        "by_stage": {
+          "llm": 7485,
+          "pg_masked": 691,
+          "unmatched": 443
+        },
+        "stage_accuracy": {
+          "llm": 0.884435537742151,
+          "pg_masked": 1.0,
+          "unmatched": 0.1489841986455982
+        }
+      },
+      "distinct": {
+        "keys": 264,
+        "correct_l2": 176,
+        "accuracy_l2": 0.6666666666666666,
+        "unmatched": 49,
+        "unmatched_rate": 0.1856060606060606,
+        "pg_masked": 7
+      },
+      "by_provider": {
+        "CARD_A": {
+          "name": "CARD_A",
+          "labeled": 3033,
+          "unlabeled": 0,
+          "accuracy_l1": 0.9218595450049456,
+          "accuracy_l2": 0.88954830201121,
+          "coverage": 0.9726343554236729,
+          "unmatched_rate": 0.017804154302670624,
+          "pg_masked_rate": 0.009561490273656445,
+          "by_stage": {
+            "llm": 2950,
+            "pg_masked": 29,
+            "unmatched": 54
+          },
+          "stage_accuracy": {
+            "llm": 0.8976271186440677,
+            "pg_masked": 1.0,
+            "unmatched": 0.3888888888888889
+          }
+        },
+        "CARD_B": {
+          "name": "CARD_B",
+          "labeled": 2807,
+          "unlabeled": 0,
+          "accuracy_l1": 0.8557178482365515,
+          "accuracy_l2": 0.8101175632347702,
+          "coverage": 0.8389739935874599,
+          "unmatched_rate": 0.08300676879230495,
+          "pg_masked_rate": 0.07801923762023513,
+          "by_stage": {
+            "llm": 2355,
+            "unmatched": 233,
+            "pg_masked": 219
+          },
+          "stage_accuracy": {
+            "llm": 0.8632696390658174,
+            "unmatched": 0.0944206008583691,
+            "pg_masked": 1.0
+          }
+        },
+        "CARD_C": {
+          "name": "CARD_C",
+          "labeled": 752,
+          "unlabeled": 0,
+          "accuracy_l1": 0.8976063829787234,
+          "accuracy_l2": 0.8696808510638298,
+          "coverage": 0.6861702127659575,
+          "unmatched_rate": 0.05186170212765957,
+          "pg_masked_rate": 0.261968085106383,
+          "by_stage": {
+            "unmatched": 39,
+            "pg_masked": 197,
+            "llm": 516
+          },
+          "stage_accuracy": {
+            "unmatched": 0.0,
+            "pg_masked": 1.0,
+            "llm": 0.8856589147286822
+          }
+        },
+        "CARD_E": {
+          "name": "CARD_E",
+          "labeled": 917,
+          "unlabeled": 0,
+          "accuracy_l1": 0.8844056706652127,
+          "accuracy_l2": 0.8582333696837514,
+          "coverage": 0.8124318429661941,
+          "unmatched_rate": 0.05561613958560523,
+          "pg_masked_rate": 0.13195201744820065,
+          "by_stage": {
+            "llm": 745,
+            "pg_masked": 121,
+            "unmatched": 51
+          },
+          "stage_accuracy": {
+            "llm": 0.887248322147651,
+            "pg_masked": 1.0,
+            "unmatched": 0.09803921568627451
+          }
+        },
+        "EFIN_D": {
+          "name": "EFIN_D",
+          "labeled": 1110,
+          "unlabeled": 0,
+          "accuracy_l1": 0.9045045045045045,
+          "accuracy_l2": 0.8684684684684685,
+          "coverage": 0.8279279279279279,
+          "unmatched_rate": 0.05945945945945946,
+          "pg_masked_rate": 0.11261261261261261,
+          "by_stage": {
+            "llm": 919,
+            "pg_masked": 125,
+            "unmatched": 66
+          },
+          "stage_accuracy": {
+            "llm": 0.8933623503808488,
+            "pg_masked": 1.0,
+            "unmatched": 0.2727272727272727
+          }
+        }
+      },
+      "confusions": [
+        {
+          "gold_l1": "shopping",
+          "pred_l1": "food",
+          "count": 500
+        },
+        {
+          "gold_l1": "cafe",
+          "pred_l1": "unclassified",
+          "count": 243
+        },
+        {
+          "gold_l1": "culture",
+          "pred_l1": "unclassified",
+          "count": 60
+        },
+        {
+          "gold_l1": "health",
+          "pred_l1": "unclassified",
+          "count": 32
+        },
+        {
+          "gold_l1": "food",
+          "pred_l1": "unclassified",
+          "count": 28
+        },
+        {
+          "gold_l1": "food",
+          "pred_l1": "shopping",
+          "count": 27
+        },
+        {
+          "gold_l1": "transport",
+          "pred_l1": "unclassified",
+          "count": 8
+        },
+        {
+          "gold_l1": "shopping",
+          "pred_l1": "unclassified",
+          "count": 6
+        }
+      ],
+      "unmatched_top": [
+        {
+          "normalized_name": "에스씨케이컴퍼니",
+          "tx_count": 200,
+          "gold_canonical": "스타벅스"
+        },
+        {
+          "normalized_name": "우리동네세탁",
+          "tx_count": 65,
+          "gold_canonical": "우리동네세탁"
+        },
+        {
+          "normalized_name": "에스지웰니스",
+          "tx_count": 32,
+          "gold_canonical": "스텝짐"
+        },
+        {
+          "normalized_name": "제이디에프컴퍼니",
+          "tx_count": 30,
+          "gold_canonical": "빈스로드"
+        },
+        {
+          "normalized_name": "멜론",
+          "tx_count": 29,
+          "gold_canonical": "멜론"
+        },
+        {
+          "normalized_name": "HANKKI",
+          "tx_count": 14,
+          "gold_canonical": "한끼밥상"
+        },
+        {
+          "normalized_name": "구글코리아",
+          "tx_count": 10,
+          "gold_canonical": "유튜브프리미엄"
+        },
+        {
+          "normalized_name": "클라우드백업",
+          "tx_count": 8,
+          "gold_canonical": "클라우드백업"
+        },
+        {
+          "normalized_name": "CLOUD BACKUP",
+          "tx_count": 5,
+          "gold_canonical": "클라우드백업"
+        },
+        {
+          "normalized_name": "YOUTUBE PREMIUM",
+          "tx_count": 4,
+          "gold_canonical": "유튜브프리미엄"
+        },
+        {
+          "normalized_name": "서교울통공사",
+          "tx_count": 3,
+          "gold_canonical": "서울교통공사"
+        },
+        {
+          "normalized_name": "서울교공사",
+          "tx_count": 2,
+          "gold_canonical": "서울교통공사"
+        },
+        {
+          "normalized_name": "주씨)유",
+          "tx_count": 2,
+          "gold_canonical": "CU"
+        },
+        {
+          "normalized_name": "G2S5",
+          "tx_count": 2,
+          "gold_canonical": "GS25"
+        },
+        {
+          "normalized_name": "무사신",
+          "tx_count": 2,
+          "gold_canonical": "무신사"
+        }
+      ]
+    },
+    "metrics": {
+      "tx_total": 8969,
+      "tx_classifiable": 8619,
+      "rule_resolved": 0,
+      "llm_targets": 257,
+      "llm_targets_skipped": 0,
+      "llm_model_calls": 1026,
+      "llm_cache_hits": 0,
+      "llm_unknown": 41,
+      "llm_failed": 8,
+      "review_queued": 111,
+      "human_corrected": 0,
+      "stage_counts": {
+        "llm": 7485,
+        "pg_masked": 691,
+        "unmatched": 443
+      }
+    }
+  }
+]

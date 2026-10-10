@@ -1,0 +1,89 @@
+# 정보제공자별 표기 관행 프로파일 (D-012)
+#
+# 왜 필요한가: 가맹점명 표기와 `merchant_regno` 채움 정도가 **제공기관마다 크게 다르다**(실무 확인).
+# 균일 랜덤 오염보다 **기관별로 뭉친 오염**이 실제에 가깝다 — 실무 정규화가 "B사는 항상 법인명을
+# 준다" 같은 기관별 패턴을 학습해 이용하기 때문이다. 균일 랜덤으로 만들면 그 패턴이 사라져서
+# 룰 단계가 실제보다 불리하게 평가된다.
+#
+# 이 파일은 **생성기 입력**이다. 동시에 평가 지표를 제공기관 축으로 쪼개는 근거가 된다
+# (blueprint §5.1 — "A사는 룰만으로 92%, C사는 61%" → LLM 이 어디서 값을 만드는지 드러난다).
+#
+# 확률은 각 변형이 적용될 비율. 합이 1일 필요는 없다(독립 적용).
+# 실제 특정 카드사를 모델링한 것이 아니다 — 관행의 **분포 범위**를 재현하는 가상 기관이다.
+
+version: 1
+
+providers:
+  # ── 깔끔한 기관: 브랜드명을 그대로, 사업자번호도 충실히 ──
+  - id: CARD_A
+    label: A카드
+    weight: 0.30                  # 전체 거래에서 차지하는 비중
+    regno_fill_rate: 0.95         # merchant_regno 채움 비율
+    name_style:
+      brand_plain: 0.55           # "스타벅스"
+      brand_with_branch: 0.35     # "스타벅스 강남역점"
+      corporate: 0.05             # "(주)스타벅스커피코리아"
+      romanized: 0.05             # "STARBUCKS"
+    channel_prefix_rate: 0.10     # "NAVERPAY*..." 등 간편결제 프리픽스
+    pg_passthrough_rate: 0.01     # PG사명이 그대로 오는 비율
+    typo_rate: 0.01
+
+  # ── 법인명 위주 기관: 브랜드를 모른 채 법인명이 온다 (정규화 난이도 상) ──
+  - id: CARD_B
+    label: B카드
+    weight: 0.25
+    regno_fill_rate: 0.50         # 절반만 채운다
+    name_style:
+      brand_plain: 0.15
+      brand_with_branch: 0.15
+      corporate: 0.60             # "㈜에스씨케이컴퍼니" — 법인명만
+      romanized: 0.10
+    channel_prefix_rate: 0.20
+    pg_passthrough_rate: 0.08
+    typo_rate: 0.03
+
+  # ── PG 노출 기관: 실가맹점이 자주 소실된다 (미분류가 정당한 답이 되는 자리) ──
+  - id: CARD_C
+    label: C카드
+    weight: 0.20
+    regno_fill_rate: 0.20         # 거의 안 온다
+    name_style:
+      brand_plain: 0.30
+      brand_with_branch: 0.20
+      corporate: 0.25
+      romanized: 0.25
+    channel_prefix_rate: 0.35
+    pg_passthrough_rate: 0.25     # 넷 중 하나는 PG사명만
+    typo_rate: 0.05
+
+  # ── 전자금융업자: 간편결제 프리픽스가 지배적 ──
+  - id: EFIN_D
+    label: D페이
+    weight: 0.15
+    regno_fill_rate: 0.35
+    name_style:
+      brand_plain: 0.45
+      brand_with_branch: 0.10
+      corporate: 0.20
+      romanized: 0.25
+    channel_prefix_rate: 0.70     # 채널이 거의 항상 붙는다
+    pg_passthrough_rate: 0.10
+    typo_rate: 0.02
+
+  # ── 소규모 기관: 표기가 가장 거칠다 (tail 의 tail) ──
+  - id: CARD_E
+    label: E카드
+    weight: 0.10
+    regno_fill_rate: 0.10
+    name_style:
+      brand_plain: 0.20
+      brand_with_branch: 0.25
+      corporate: 0.30
+      romanized: 0.25
+    channel_prefix_rate: 0.25
+    pg_passthrough_rate: 0.15
+    typo_rate: 0.10               # 오타가 잦다
+
+# 참고: regno 는 신뢰할 수 없으므로 정규화의 **주 키로 쓰지 않는다**(D-012).
+# 채워져 있어도 ① PG 경유 시 PG사 번호가 오고 ② 같은 브랜드가 점포별로 다른 번호를 가져
+# "같은 점포"는 잡아도 "같은 브랜드"는 못 잡는다. 브랜드 단위 집계에는 이름 정규화가 필요하다.

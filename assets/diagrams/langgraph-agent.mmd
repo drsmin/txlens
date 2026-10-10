@@ -1,0 +1,34 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__(["__start__"])
+	model("model")
+	tools("tools")
+	PIIMiddleware_credit_card__before_model("PIIMiddleware[credit_card].before_model")
+	PIIMiddleware_credit_card__after_model("PIIMiddleware[credit_card].after_model")
+	PIIMiddleware_customer_id__before_model("PIIMiddleware[customer_id].before_model")
+	PIIMiddleware_customer_id__after_model("PIIMiddleware[customer_id].after_model")
+	ToolCallLimitMiddleware_after_model("ToolCallLimitMiddleware.after_model")
+	ModelCallLimitMiddleware_before_model("ModelCallLimitMiddleware.before_model")
+	ModelCallLimitMiddleware_after_model("ModelCallLimitMiddleware.after_model")
+	__end__(["__end__"])
+	ModelCallLimitMiddleware_after_model --> ToolCallLimitMiddleware_after_model;
+	ModelCallLimitMiddleware_before_model -.-> __end__;
+	ModelCallLimitMiddleware_before_model -.-> model;
+	PIIMiddleware_credit_card__after_model -.-> PIIMiddleware_credit_card__before_model;
+	PIIMiddleware_credit_card__after_model -.-> __end__;
+	PIIMiddleware_credit_card__after_model -.-> tools;
+	PIIMiddleware_credit_card__before_model -.-> PIIMiddleware_customer_id__before_model;
+	PIIMiddleware_credit_card__before_model -.-> __end__;
+	PIIMiddleware_customer_id__after_model --> PIIMiddleware_credit_card__after_model;
+	PIIMiddleware_customer_id__before_model -.-> ModelCallLimitMiddleware_before_model;
+	PIIMiddleware_customer_id__before_model -.-> __end__;
+	ToolCallLimitMiddleware_after_model -.-> PIIMiddleware_customer_id__after_model;
+	ToolCallLimitMiddleware_after_model -.-> __end__;
+	__start__ --> PIIMiddleware_credit_card__before_model;
+	model --> ModelCallLimitMiddleware_after_model;
+	tools -.-> PIIMiddleware_credit_card__before_model;
+	tools -.-> __end__;

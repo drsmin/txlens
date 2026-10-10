@@ -1,0 +1,249 @@
+# 룰 사전 v3 — v2 + 승격 자동 8건 (blueprint §3.3 ⑤)
+#
+# ⚠️ 이 파일은 `python -m txlens.promote` 가 생성한다. 손으로 고치지 말고 사전을 고치려면
+#    v2 을 고치고 다시 승격시킨다 — 다음 승격이 이 파일을 덮어쓴다.
+#
+# 승격 조건: confidence >= 0.7 · evidence != guess · l1 != unclassified
+# 판정 모델: openai:gpt-4o-mini
+# 덮는 거래: 10건
+#
+# 승격 목록 (표기 → 대표명 · 덮는 거래 수 · [패턴/출처])
+#   주주)쿠팡 → 쿠팡 · 3건 [alias/llm_high_confidence]
+#   COUAPNG → 쿠팡 · 1건 [alias/llm_high_confidence]
+#   KAKAOPY*쿠팡 → 쿠팡 · 1건 [alias/llm_high_confidence]
+#   KAKKAOPAY*스텝짐멤버십 → 스텝짐멤버십 · 1건 [alias/llm_high_confidence]
+#   KYOCHNO → 교촌치킨 · 1건 [alias/llm_high_confidence]
+#   NETFLXI → 넷플릭스 · 1건 [alias/llm_high_confidence]
+#   스타스 → 스타벅스 · 1건 [alias/llm_high_confidence]
+#   주지)에스리테일 → GS25 · 1건 [alias/llm_high_confidence]
+
+version: 3
+entries:
+- l1: cafe
+  l2: cafe.coffee
+  canonical: 스타벅스
+  alias:
+  - 에스씨케이컴퍼니
+  - STARBUCKS
+  - NAVEPRAY*에스씨케이컴퍼니
+  - NAVRPAY*스타벅스
+  - TOSPSAY*에스씨케이컴퍼니
+  - 스타스
+  regex:
+  - ^스타벅스
+- l1: food
+  l2: food.convenience
+  canonical: GS25
+  alias:
+  - 지에스리테일
+  - 주)지에스리테일
+  - G2S5
+  - GS225
+  - SSGPAAY*GS25
+  - 카카오페이G_S25
+  - 주지)에스리테일
+  regex:
+  - ^GS25
+- l1: food
+  l2: food.convenience
+  canonical: CU
+  alias:
+  - 씨유
+  - NAVERPAAY*(주)씨유
+  - 네이이버페이*CU
+  regex:
+  - ^CU(?![A-Z])
+- l1: food
+  l2: food.grocery
+  canonical: 이마트
+  alias:
+  - EMART
+  - 주()이마트
+  regex:
+  - ^이마트
+- l1: shopping
+  l2: shopping.online
+  canonical: 쿠팡
+  alias:
+  - COUPANG
+  - NAVERPAY(주)쿠팡
+  - TOSPAY*쿠팡
+  - TOSSPPAY*쿠팡
+  - 주주)쿠팡
+  - COUAPNG
+  - KAKAOPY*쿠팡
+- l1: food
+  l2: food.delivery
+  canonical: 배달의민족
+  alias:
+  - 우아한형제들
+  - BAEMIN
+  - PAYO*(주)우아한형제들
+  - SSGGPAY*BAEMIN
+- l1: cafe
+  l2: cafe.bakery
+  canonical: 투썸플레이스
+  alias:
+  - TWOSOME
+  - KAKAOPA*(주)투썸플레이스
+  - PAYC*투썸플레이스
+  - PAYYCO*투썸플레이스
+  regex:
+  - ^투썸플레이스
+- l1: food
+  l2: food.restaurant
+  canonical: 김밥천국
+  alias:
+  - SSGPY*김밥천국
+  regex:
+  - ^김밥천국
+- l1: food
+  l2: food.restaurant
+  canonical: 교촌치킨
+  alias:
+  - 교촌에프앤비
+  - KYOCHON
+  - KYOCHNO
+  regex:
+  - ^교촌치킨
+- l1: transport
+  l2: transport.transit
+  canonical: 서울교통공사
+  alias:
+  - KAAKAOPAY*서울교통공사
+  - 네이버이페*서울교통공사
+  - 서울통교공사
+- l1: transport
+  l2: transport.taxi
+  canonical: 카카오T
+  alias:
+  - 카카오모빌리티
+  - KAKAO T
+  - 카카T오
+  - 카카카오T
+- l1: transport
+  l2: transport.fuel
+  canonical: SK에너지
+  alias:
+  - 에스케이에너지
+  - SK ENERGY
+  - SK에지너
+  regex:
+  - ^SK에너지
+- l1: health
+  l2: health.beauty
+  canonical: 올리브영
+  alias:
+  - 씨제이올리브영
+  - OLIVE YOUNG
+  regex:
+  - ^올리브영
+- l1: shopping
+  l2: shopping.living
+  canonical: 다이소
+  alias:
+  - 아성다이소
+  - DAISO
+  - PAAYCO*다이소
+  - TSSPAY*(주)아성다이소
+  regex:
+  - ^다이소
+- l1: shopping
+  l2: shopping.fashion
+  canonical: 무신사
+  alias:
+  - MUSINSA
+  - 무사신
+  - NVERPAY*(주)무신사
+  - TOSSPY*MUSINSA
+- l1: culture
+  l2: culture.hobby
+  canonical: 메가박스
+  alias:
+  - 메가박스중앙
+  - MEGABOX
+  - SSPGAY*(주)메가박스중앙
+  - 카카페이_(주)메가박스중앙
+  regex:
+  - ^메가박스
+- l1: culture
+  l2: culture.book
+  canonical: 교보문고
+  alias:
+  - KYOBO
+  regex:
+  - ^교보문고
+- l1: health
+  l2: health.pharmacy
+  canonical: 동네약국
+  alias:
+  - TOSPAY*동네약국
+  regex:
+  - ^동네약국
+- l1: transport
+  l2: transport.parking
+  canonical: 한빛주차장
+  regex:
+  - ^한빛주차장
+- l1: cafe
+  l2: cafe.coffee
+  canonical: 빈스로드
+  alias:
+  - BEANS ROAD
+  regex:
+  - ^빈스로드
+- l1: food
+  l2: food.restaurant
+  canonical: 한끼밥상
+  alias:
+  - HANKKI
+  regex:
+  - ^한끼밥상
+- l1: food
+  l2: food.grocery
+  canonical: 데일리마트
+  alias:
+  - DAILY MART
+  regex:
+  - ^데일리마트
+- l1: culture
+  l2: culture.content
+  canonical: 넷플릭스
+  alias:
+  - 넷플릭스서비시스코리아
+  - NETFLIX
+  - SSSGPAY*넷플릭스
+  - NETFLXI
+- l1: culture
+  l2: culture.content
+  canonical: 유튜브프리미엄
+  alias:
+  - 구글코리아
+  - YOUTUBE PREMIUM
+- l1: culture
+  l2: culture.content
+  canonical: 멜론
+  alias:
+  - MELON
+- l1: shopping
+  l2: shopping.online
+  canonical: 쿠팡와우
+  alias:
+  - COUPANG WOW
+- l1: housing
+  l2: housing.telecom
+  canonical: SKT통신요금
+  alias:
+  - 에스케이텔레콤
+  - SKT
+- l1: health
+  l2: health.fitness
+  canonical: 스텝짐멤버십
+  alias:
+  - STEP GYM MEMBERSHIP
+  - KAKKAOPAY*스텝짐멤버십
+- l1: culture
+  l2: culture.content
+  canonical: 클라우드백업
+  alias:
+  - CLOUD BACKUP
