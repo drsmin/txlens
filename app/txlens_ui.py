@@ -390,7 +390,7 @@ SNAPSHOT_PATH = ROOT / "data" / "gold" / "baselines-v1-gpt-4o-mini.json"
 
 #: 스냅샷을 만드는 명령. 화면이 이 문자열을 그대로 보여준다 — 발표 전날 "그 명령이 뭐였지"
 #: 를 세션 로그에서 찾지 않기 위한 자리다. `--baseline b` 다: (A)·(C) 는 이 화면이 그 자리에서
-#: 다시 재므로 `all` 로 돌리면 이미 있는 수를 580회 더 사 오는 것이다.
+#: 다시 재므로 `all` 로 돌리면 이미 있는 수를 587회 더 사 오는 것이다.
 SNAPSHOT_CMD = (
     "python -m txlens.eval --baseline b --model openai:gpt-4o-mini "
     f"--json {SNAPSHOT_PATH.relative_to(ROOT).as_posix()}"

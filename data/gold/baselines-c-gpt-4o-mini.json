@@ -1,0 +1,330 @@
+[
+  {
+    "result": {
+      "label": "C · 하이브리드",
+      "dictionary_version": 1,
+      "tx_total": 8969,
+      "tx_classified": 8619,
+      "tx_excluded": 350,
+      "excluded_reasons": {
+        "취소_상계": 175,
+        "취소_거래": 175
+      },
+      "overall": {
+        "name": "전체",
+        "labeled": 8619,
+        "unlabeled": 0,
+        "accuracy_l1": 0.9800440886413737,
+        "accuracy_l2": 0.9793479521986309,
+        "coverage": 0.8937231697412693,
+        "unmatched_rate": 0.02610511660285416,
+        "pg_masked_rate": 0.08017171365587655,
+        "by_stage": {
+          "exact": 5474,
+          "alias": 1746,
+          "unmatched": 225,
+          "llm": 441,
+          "pg_masked": 691,
+          "fuzzy": 35,
+          "regex": 7
+        },
+        "stage_accuracy": {
+          "exact": 1.0,
+          "alias": 1.0,
+          "unmatched": 0.29333333333333333,
+          "llm": 0.9569160997732427,
+          "pg_masked": 1.0,
+          "fuzzy": 1.0,
+          "regex": 1.0
+        }
+      },
+      "distinct": {
+        "keys": 264,
+        "correct_l2": 228,
+        "accuracy_l2": 0.8636363636363636,
+        "unmatched": 22,
+        "unmatched_rate": 0.08333333333333333,
+        "pg_masked": 7
+      },
+      "by_provider": {
+        "CARD_A": {
+          "name": "CARD_A",
+          "labeled": 3033,
+          "unlabeled": 0,
+          "accuracy_l1": 0.9904385097263435,
+          "accuracy_l2": 0.990108803165183,
+          "coverage": 0.9746125947906363,
+          "unmatched_rate": 0.01582591493570722,
+          "pg_masked_rate": 0.009561490273656445,
+          "by_stage": {
+            "exact": 2649,
+            "alias": 198,
+            "unmatched": 48,
+            "llm": 104,
+            "pg_masked": 29,
+            "fuzzy": 4,
+            "regex": 1
+          },
+          "stage_accuracy": {
+            "exact": 1.0,
+            "alias": 1.0,
+            "unmatched": 0.4375,
+            "llm": 0.9711538461538461,
+            "pg_masked": 1.0,
+            "fuzzy": 1.0,
+            "regex": 1.0
+          }
+        },
+        "CARD_B": {
+          "name": "CARD_B",
+          "labeled": 2807,
+          "unlabeled": 0,
+          "accuracy_l1": 0.9693623085144282,
+          "accuracy_l2": 0.9686498040612754,
+          "coverage": 0.885286783042394,
+          "unmatched_rate": 0.03669397933737086,
+          "pg_masked_rate": 0.07801923762023513,
+          "by_stage": {
+            "exact": 1352,
+            "alias": 957,
+            "pg_masked": 219,
+            "llm": 164,
+            "unmatched": 103,
+            "fuzzy": 11,
+            "regex": 1
+          },
+          "stage_accuracy": {
+            "exact": 1.0,
+            "alias": 1.0,
+            "pg_masked": 1.0,
+            "llm": 0.9573170731707317,
+            "unmatched": 0.21359223300970873,
+            "fuzzy": 1.0,
+            "regex": 1.0
+          }
+        },
+        "CARD_C": {
+          "name": "CARD_C",
+          "labeled": 752,
+          "unlabeled": 0,
+          "accuracy_l1": 0.9840425531914894,
+          "accuracy_l2": 0.9840425531914894,
+          "coverage": 0.7247340425531915,
+          "unmatched_rate": 0.013297872340425532,
+          "pg_masked_rate": 0.261968085106383,
+          "by_stage": {
+            "alias": 155,
+            "pg_masked": 197,
+            "llm": 40,
+            "exact": 346,
+            "fuzzy": 4,
+            "unmatched": 10
+          },
+          "stage_accuracy": {
+            "alias": 1.0,
+            "pg_masked": 1.0,
+            "llm": 0.95,
+            "exact": 1.0,
+            "fuzzy": 1.0,
+            "unmatched": 0.0
+          }
+        },
+        "CARD_E": {
+          "name": "CARD_E",
+          "labeled": 917,
+          "unlabeled": 0,
+          "accuracy_l1": 0.9716466739367503,
+          "accuracy_l2": 0.9694656488549618,
+          "coverage": 0.8386041439476554,
+          "unmatched_rate": 0.029443838604143947,
+          "pg_masked_rate": 0.13195201744820065,
+          "by_stage": {
+            "unmatched": 27,
+            "exact": 482,
+            "llm": 72,
+            "pg_masked": 121,
+            "alias": 196,
+            "regex": 5,
+            "fuzzy": 14
+          },
+          "stage_accuracy": {
+            "unmatched": 0.18518518518518517,
+            "exact": 1.0,
+            "llm": 0.9166666666666666,
+            "pg_masked": 1.0,
+            "alias": 1.0,
+            "regex": 1.0,
+            "fuzzy": 1.0
+          }
+        },
+        "EFIN_D": {
+          "name": "EFIN_D",
+          "labeled": 1110,
+          "unlabeled": 0,
+          "accuracy_l1": 0.9828828828828828,
+          "accuracy_l2": 0.9819819819819819,
+          "coverage": 0.8540540540540541,
+          "unmatched_rate": 0.03333333333333333,
+          "pg_masked_rate": 0.11261261261261261,
+          "by_stage": {
+            "llm": 61,
+            "alias": 240,
+            "exact": 645,
+            "pg_masked": 125,
+            "unmatched": 37,
+            "fuzzy": 2
+          },
+          "stage_accuracy": {
+            "llm": 0.9836065573770492,
+            "alias": 1.0,
+            "exact": 1.0,
+            "pg_masked": 1.0,
+            "unmatched": 0.4864864864864865,
+            "fuzzy": 1.0
+          }
+        }
+      },
+      "confusions": [
+        {
+          "gold_l1": "cafe",
+          "pred_l1": "unclassified",
+          "count": 89
+        },
+        {
+          "gold_l1": "food",
+          "pred_l1": "unclassified",
+          "count": 59
+        },
+        {
+          "gold_l1": "culture",
+          "pred_l1": "unclassified",
+          "count": 5
+        },
+        {
+          "gold_l1": "shopping",
+          "pred_l1": "food",
+          "count": 4
+        },
+        {
+          "gold_l1": "shopping",
+          "pred_l1": "unclassified",
+          "count": 4
+        },
+        {
+          "gold_l1": "transport",
+          "pred_l1": "cafe",
+          "count": 3
+        },
+        {
+          "gold_l1": "food",
+          "pred_l1": "culture",
+          "count": 2
+        },
+        {
+          "gold_l1": "food",
+          "pred_l1": "transport",
+          "count": 2
+        }
+      ],
+      "unmatched_top": [
+        {
+          "normalized_name": "우리동네세탁",
+          "tx_count": 65,
+          "gold_canonical": "우리동네세탁"
+        },
+        {
+          "normalized_name": "낙원떡집",
+          "tx_count": 55,
+          "gold_canonical": "낙원떡집"
+        },
+        {
+          "normalized_name": "제이디에프컴퍼니",
+          "tx_count": 30,
+          "gold_canonical": "빈스로드"
+        },
+        {
+          "normalized_name": "에이치케이푸드시스템",
+          "tx_count": 29,
+          "gold_canonical": "한끼밥상"
+        },
+        {
+          "normalized_name": "디엠리테일홀딩스",
+          "tx_count": 27,
+          "gold_canonical": "데일리마트"
+        },
+        {
+          "normalized_name": "브이엘소프트",
+          "tx_count": 2,
+          "gold_canonical": "클라우드백업"
+        },
+        {
+          "normalized_name": "팡쿠",
+          "tx_count": 2,
+          "gold_canonical": "쿠팡"
+        },
+        {
+          "normalized_name": "메박가스",
+          "tx_count": 1,
+          "gold_canonical": "메가박스"
+        },
+        {
+          "normalized_name": "제이디에프컴컴퍼니",
+          "tx_count": 1,
+          "gold_canonical": "빈스로드"
+        },
+        {
+          "normalized_name": "NAVERPAY(주)쿠팡",
+          "tx_count": 1,
+          "gold_canonical": "쿠팡"
+        },
+        {
+          "normalized_name": "무사",
+          "tx_count": 1,
+          "gold_canonical": "무신사"
+        },
+        {
+          "normalized_name": "제이디에컴퍼니",
+          "tx_count": 1,
+          "gold_canonical": "빈스로드"
+        },
+        {
+          "normalized_name": "제이디에프컴니퍼",
+          "tx_count": 1,
+          "gold_canonical": "빈스로드"
+        },
+        {
+          "normalized_name": "카카페이_(주)메가박스중앙",
+          "tx_count": 1,
+          "gold_canonical": "메가박스"
+        },
+        {
+          "normalized_name": "유씨",
+          "tx_count": 1,
+          "gold_canonical": "CU"
+        }
+      ]
+    },
+    "metrics": {
+      "tx_total": 8969,
+      "tx_classifiable": 8619,
+      "rule_resolved": 7262,
+      "llm_targets": 155,
+      "llm_targets_skipped": 0,
+      "llm_model_calls": 587,
+      "llm_cache_hits": 0,
+      "llm_unknown": 15,
+      "llm_failed": 7,
+      "review_queued": 64,
+      "human_corrected": 0,
+      "stage_counts": {
+        "exact": 5474,
+        "alias": 1746,
+        "unmatched": 225,
+        "llm": 441,
+        "pg_masked": 691,
+        "fuzzy": 35,
+        "regex": 7
+      }
+    }
+  }
+]
