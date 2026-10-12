@@ -11,10 +11,10 @@
 
 | 무엇 | 위치 |
 | --- | --- |
-| 발표 자료 (PDF) | [`deliverables/TxLens-final.pdf`](deliverables/) |
-| 데모 영상 (2분 25초 · 1080p) | [`deliverables/txlens-demo.mp4`](deliverables/) — 화면 + 오른쪽 칸의 LangGraph 실행 로그 |
+| 발표 자료 (PDF) | [`deliverables/TxLens-final.pdf`](deliverables/) — 발표 본편 · 부록(설계 결정·실측 전문·Q&A)까지는 `TxLens-final-full.pdf` |
+| 데모 영상 (2분 16초 · 1080p · 무음) | [`deliverables/txlens-demo.mp4`](deliverables/) — 화면 + 오른쪽 칸의 LangGraph 실행 로그 |
 | 제출 노트북 | [`notebooks/txlens_demo.ipynb`](notebooks/txlens_demo.ipynb) — 실행 결과가 저장돼 있다 |
-| 소스 | `src/txlens/` (패키지) · `app/` (Streamlit 화면) · `tests/` (380 tests) |
+| 소스 | `src/txlens/` (패키지) · `app/` (Streamlit 화면) · `tests/` (384 tests) |
 
 **노트북은 얇은 오케스트레이터다.** 로직은 전부 `src/txlens/` 에 있고 노트북은 그것을 import 해서
 부르기만 한다 — 노트북의 결과가 곧 실제 프로그램(CLI·화면)의 결과다. 그래서 패키지를 함께 낸다.
@@ -48,7 +48,7 @@ Python 3.11 이상.
 ```bash
 pip install -r requirements.txt && pip install -e .
 python -m txlens.generator --seed 42      # 합성 데이터 (거래 8,969건 · 정답 동시 생성)
-pytest                                    # 380 tests
+pytest                                    # 384 tests
 ```
 
 **API 키 없이 도는 것** — 저장된 LLM 판정(`data/gold/verdicts-*.json`)을 재생한다.
@@ -77,11 +77,11 @@ python -m txlens.promote --rounds 3      # 승격 루프 실호출
 src/txlens/      패키지 — graph(LangGraph 8노드) · agents · rules · detect · eval · promote · generator · mcp_server
 app/             Streamlit 화면 (재생 대본으로 돈다 — API 0)
 notebooks/       제출 노트북
-tests/           380 tests
+tests/           384 tests
 config/          택소노미 · 모델 프로필
 rules/           룰 사전 v1~v5 (승격 라운드마다 한 판)
 data/gold/       저장된 LLM 판정 · 실호출 스냅샷 (합성 데이터 자체는 시드로 재생성)
 assets/diagrams/ build_graph() 가 컴파일한 그래프에서 뽑은 그림
 scripts/         데모 영상 녹화(record-demo.py) · 그래프 그림(render-graph.py)
-deliverables/    발표 PDF · 데모 영상
+deliverables/    발표 PDF(본편 · 부록 포함) · 데모 영상
 ```
