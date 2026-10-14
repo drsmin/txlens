@@ -1,8 +1,8 @@
-"""룰 사전 + 5단계 매칭 테스트 (blueprint §3.3 ②).
+"""룰 사전 + 5단계 매칭 테스트 (설계 §3.3 ②).
 
 여기서 막고 싶은 것은 셋이다.
 
-① **사전이 정답 카탈로그로 자라는 것** (D-022). 사전을 손으로 고치는 일이 앞으로 계속 생기고,
+① **사전이 정답 카탈로그로 자라는 것**. 사전을 손으로 고치는 일이 앞으로 계속 생기고,
    그때마다 "이것도 넣으면 점수가 오르는데" 라는 유혹이 있다. tail 브랜드나 가상 브랜드의
    법인명이 사전에 들어오면 베이스라인 (A) 가 부풀고 §5.2 전이 실험의 개선폭이 무너지므로,
    사람의 기억이 아니라 **테스트가 기계적으로 막는다.**
@@ -29,7 +29,7 @@ from txlens.rules import (
 )
 from txlens.schemas import CategoryL1, CategoryL2, MatchStage, RawTx
 
-#: head/tail 경계 — D-022. 사전에 들어갈 수 있는 브랜드의 유일한 기준이다.
+#: head/tail 경계 — 사전에 들어갈 수 있는 브랜드의 유일한 기준이다.
 HEAD_FREQUENCY = 1.0
 
 
@@ -67,9 +67,9 @@ def _all_keys(dictionary: RuleDictionary) -> list[str]:
     return out
 
 
-# ── ① D-022 — 사전의 범위를 기계적으로 강제한다 ─────────────────────────────
+# ── ① 사전의 범위를 기계적으로 강제한다 ─────────────────────────────────────
 def test_사전은_head_브랜드만_담는다(dictionary: RuleDictionary):
-    """tail 이 들어오면 LLM·HITL 이 일할 자리가 사라져 §5.2 전이 실험이 무의미해진다 (D-022)."""
+    """tail 이 들어오면 LLM·HITL 이 일할 자리가 사라져 §5.2 전이 실험이 무의미해진다."""
     head = {b.brand for b in ALL_BRANDS if b.frequency >= HEAD_FREQUENCY}
     listed = {e.canonical for e in dictionary.entries}
     assert listed <= head, f"head 가 아닌 브랜드가 사전에 있다: {sorted(listed - head)}"
@@ -97,7 +97,7 @@ def test_tail_브랜드의_어떤_표기도_룰에_걸리지_않는다(matcher: 
 
 
 def test_가상_브랜드의_법인명은_사전에_없다(dictionary: RuleDictionary):
-    """가상 브랜드는 "표기만 보고는 사람도 모르는" 최고난도로 만든 함정이다 (D-022).
+    """가상 브랜드는 "표기만 보고는 사람도 모르는" 최고난도로 만든 함정이다.
 
     법인명 alias 를 넣으면 스스로 함정을 해제한다. 로마자(`BEANS ROAD`)는 사람이 읽어 옮길 수
     있으므로 허용 — 즉 여기서 막는 것은 **법인명뿐**이다.
@@ -121,7 +121,7 @@ def test_PG사명은_사전에_없다(dictionary: RuleDictionary):
 def test_사전_라벨은_카탈로그_정답과_일치한다(dictionary: RuleDictionary):
     """사전에 라벨을 손으로 적으므로 오타가 난다. 오타 하나가 그 브랜드 전 거래를 틀리게 한다.
 
-    카탈로그를 **비교 대상으로만** 쓴다 — 사전을 카탈로그에서 생성하지는 않는다 (D-022).
+    카탈로그를 **비교 대상으로만** 쓴다 — 사전을 카탈로그에서 생성하지는 않는다.
     """
     truth = {b.brand: (b.l1, b.l2) for b in ALL_BRANDS}
     for entry in dictionary.entries:
@@ -218,12 +218,12 @@ def test_alias는_법인명과_로마자를_브랜드로_잇는다(matcher: Rule
 
 
 def test_regno는_사전에_등록된_경우에만_돈다(matcher: RuleMatcher, dictionary: RuleDictionary):
-    """v1 사전의 regno 는 비어 있다 — 그래서 이 단계는 0건을 잡는다 (D-012).
+    """v1 사전의 regno 는 비어 있다 — 그래서 이 단계는 0건을 잡는다.
 
     번호가 있어도 매칭이 일어나지 않는 것이 **의도된 상태**다. 사전에 등록되면 하이픈 표기가
     달라도 잡혀야 하므로, 등록된 사전을 만들어 그 경로를 확인한다.
     """
-    assert dictionary.regno_index == {}, "v1 사전에 regno 를 넣었다면 D-012 를 다시 읽어야 한다"
+    assert dictionary.regno_index == {}, "v1 사전에 regno 를 넣었다면 설계 근거를 다시 읽어야 한다"
     assert matcher.match(_tx("알수없는가게", merchant_regno="123-45-67890")).match_stage is (
         MatchStage.UNMATCHED
     )
@@ -269,7 +269,7 @@ def test_fuzzy는_오타를_흡수하고_신뢰도를_낮춘다(matcher: RuleMat
 
 
 def test_fuzzy_임계값_미달은_미매칭으로_남긴다(matcher: RuleMatcher):
-    """가장 비슷한 것에 억지로 붙이면 정확도는 오르지만 **틀린 답이 조용히 섞인다** (D-010)."""
+    """가장 비슷한 것에 억지로 붙이면 정확도는 오르지만 **틀린 답이 조용히 섞인다**."""
     hit = matcher.match(_tx("처음보는가게이름"))
     assert hit.match_stage is MatchStage.UNMATCHED
     assert hit.category_l1 is CategoryL1.UNCLASSIFIED
@@ -280,7 +280,7 @@ def test_fuzzy_임계값_미달은_미매칭으로_남긴다(matcher: RuleMatche
 
 
 def test_유사도가_모르는_가맹점을_사전의_긴_이름에_흡수하지_않는다(matcher: RuleMatcher):
-    """`token_set_ratio` 를 되돌리면 여기서 깨진다 (D-024).
+    """`token_set_ratio` 를 되돌리면 여기서 깨진다.
 
     부분집합에 100 점을 주는 스코어러는 `STEP GYM`(사전에 없는 tail 브랜드)을
     `STEP GYM MEMBERSHIP`(사전의 구독 브랜드)으로 만든다. L2 가 같아서 **분류 지표로는 보이지도
@@ -314,7 +314,7 @@ def test_PG경유는_매칭하지_않고_미분류가_정답이다(matcher: Rule
 
 
 def test_tail_브랜드는_룰이_잡지_못한다(matcher: RuleMatcher):
-    """이것이 **의도된 실패**다 (D-022). 여기가 LLM·HITL 이 증명해야 하는 자리다."""
+    """이것이 **의도된 실패**다. 여기가 LLM·HITL 이 증명해야 하는 자리다."""
     for name in ("을지로호프", "성수동카페", "영어의달인학원"):
         assert matcher.match(_tx(name)).match_stage is MatchStage.UNMATCHED, name
 

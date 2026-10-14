@@ -1,4 +1,4 @@
-"""S4 인사이트 화면 — 화면이 **탐지기와 다른 말을 하지 않는가** (blueprint §3.6 · D-035).
+"""S4 인사이트 화면 — 화면이 **탐지기와 다른 말을 하지 않는가** (설계 §3.6).
 
 S2 의 실패 모양이 "화면이 그럴듯한 숫자를 보여주는데 그게 측정값이 아니다" 였다면, 이 화면의
 실패 모양은 **"화면이 탐지 결과를 다시 해석해 버린다"** 이고 자리가 넷 있다.
@@ -107,9 +107,9 @@ def test_구독은_월_고정비가_큰_것부터_나온다():
     assert costs == sorted(costs, reverse=True)
 
 
-# ── ④ 토글이 §5.2 와 같은 코드를 도는가 ──────────────────────────────────────
+# ── ④ 토글이 §5.2 와 같은 코드를 도는가 ─────────────────────────────────────
 def test_전이_실험이_원본_탐지_결과를_들고_다닌다():
-    """화면이 목록을 그리려고 네 단계를 **다시** 계산하면 표와 목록이 갈라진다 (D-018)."""
+    """화면이 목록을 그리려고 네 단계를 **다시** 계산하면 표와 목록이 갈라진다."""
     from txlens.eval.transfer import run_transfer
 
     rows = run_transfer(bundle_dir=ui.BUNDLE_DIR, verdicts_path=ui.VERDICTS_PATH)
@@ -119,12 +119,12 @@ def test_전이_실험이_원본_탐지_결과를_들고_다닌다():
         # 지표의 분모(`detected`)가 곧 원본 목록의 길이여야 한다 — 다르면 표와 목록이
         # 서로 다른 계산에서 나온 것이다.
         assert row.detection.subscription.detected == len(row.detections.subscriptions)
-        # 같은 분류를 다시 넣으면 같은 탐지가 나온다 (결정론 — D-035).
+        # 같은 분류를 다시 넣으면 같은 탐지가 나온다 (결정론).
         assert len(detect(row.classified).subscriptions) == len(row.detections.subscriptions)
 
 
 def test_분류_단계를_올리면_찾는_구독이_는다():
-    """이 화면의 주장 자체 — 이름을 못 묶으면 구독을 못 찾는다 (S13 · D-035)."""
+    """이 화면의 주장 자체 — 이름을 못 묶으면 구독을 못 찾는다 (S13)."""
     from txlens.eval.transfer import run_transfer
 
     found = {
@@ -135,7 +135,7 @@ def test_분류_단계를_올리면_찾는_구독이_는다():
     assert found["C · 하이브리드"] < found["정답 분류(상한)"], "상한이 달성치보다 낮을 수 없다"
 
 
-# ── 화면이 실제로 도는가 ─────────────────────────────────────────────────────
+# ── 화면이 실제로 도는가 ────────────────────────────────────────────────────
 def test_화면이_네_단계를_모두_예외_없이_그린다():
     from streamlit.testing.v1 import AppTest
 
@@ -150,7 +150,7 @@ def test_화면이_네_단계를_모두_예외_없이_그린다():
         assert not at.exception, at.exception[0].value if at.exception else ""
         tile = next(m for m in at.metric if m.label == "찾은 구독")
         seen[stage] = (tile.value, len(at.dataframe[0].value))
-    # 타일에 적힌 수와 표의 줄 수가 같아야 한다 — 화면 안에서 산수가 맞아야 한다 (D-041⑤).
+    # 타일에 적힌 수와 표의 줄 수가 같아야 한다 — 화면 안에서 산수가 맞아야 한다.
     for stage, (value, n_rows) in seen.items():
         assert value == f"{n_rows}건", f"{stage}: 타일 {value} ≠ 표 {n_rows}줄"
 

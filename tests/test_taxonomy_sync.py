@@ -75,14 +75,7 @@ def test_sync_check_actually_fails_on_drift(tmp_path):
 # ── 문서에 적힌 개수도 드리프트한다 ─────────────────────────────────────────
 #: `L1 11개` / `L2 40개` 같은 문장을 담고 있는 문서들. 발표 자료가 포함되는 것이 중요하다 —
 #: 청중이 보는 숫자다.
-_DOCS_WITH_COUNTS = (
-    "README.md",
-    "docs/glossary.md",
-    "docs/todo.md",
-    "docs/reports/2026-08-26-midterm-presentation.md",
-)
-#: 회전된 발표본(`docs/archive/reports/`)은 넣지 않는다 — 그때 무엇을 말했는지의 기록이므로
-#: 오늘의 택소노미를 따라갈 이유가 없다. 현행판만 청중이 본다 (D-030).
+_DOCS_WITH_COUNTS = ("README.md",)
 _COUNT_PATTERN = re.compile(r"\bL([12])\s+(\d+)개")
 
 

@@ -1,4 +1,4 @@
-"""승격 루프 드라이버 — `python -m txlens.promote` (blueprint §3.3 ⑤).
+"""승격 루프 드라이버 — `python -m txlens.promote` (설계 §3.3 ⑤).
 
     python -m txlens.promote --rounds 3 --model openai:gpt-4o-mini
     python -m txlens.promote --rounds 3 --dry-run      # 사전을 쓰지 않고 표만 본다
@@ -247,7 +247,7 @@ def calibration_report(
     verdicts: Mapping[str, LLMVerdict],
     gold: Mapping[str, GoldKey],
 ) -> str:
-    """승격 문턱을 **정답셋으로** 정하기 위한 표 (D-033).
+    """승격 문턱을 **정답셋으로** 정하기 위한 표.
 
     문턱을 감으로 정하면 두 방향으로 틀린다. 높으면 정답이 사전에 못 올라가고(승격 0건), 낮으면
     오답이 검토 없이 굳는다. 우리에겐 골드셋이 있으므로 각 문턱에서 **승격될 것들이 실제로 몇
@@ -367,7 +367,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     ap.add_argument(
         "--calibrate", action="store_true",
-        help="문턱 보정표만 낸다 — 각 문턱에서 승격될 것들이 정답셋과 얼마나 맞는지 (D-033)",
+        help="문턱 보정표만 낸다 — 각 문턱에서 승격될 것들이 정답셋과 얼마나 맞는지",
     )
     args = ap.parse_args(argv)
 
@@ -379,7 +379,7 @@ def main(argv: list[str] | None = None) -> int:
     elif not os.getenv("OPENAI_API_KEY"):
         ap.error(
             "OPENAI_API_KEY 가 없어 승격 루프를 돌릴 수 없다 — 라운드마다 LLM 판정이 필요하다. "
-            ".env 에 키를 넣어라 (docs/recovery.md). 저장된 판정이 있으면 --from-verdicts"
+            ".env 에 키를 넣어라 (README 참고). 저장된 판정이 있으면 --from-verdicts"
         )
 
     dictionary = load_dictionary(args.rules) if args.rules else load_dictionary()

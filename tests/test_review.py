@@ -1,4 +1,4 @@
-"""HITL 검토 루프 — `confidence_gate` → `human_review` → `rule_promote` (D-036② · blueprint §3.3 ④).
+"""HITL 검토 루프 — `confidence_gate` → `human_review` → `rule_promote` (설계 §3.3 ④).
 
 여기서 막고 싶은 것은 다섯이다.
 
@@ -108,7 +108,7 @@ def test_분류기가_없으면_켤_수_없다():
 
 
 def test_서브그래프는_세_노드와_두_갈래다():
-    """경계는 **멈출 수 있는 부분**이다 (D-036②). 그 셋만 체크포인터가 필요하다."""
+    """경계는 **멈출 수 있는 부분**이다. 그 셋만 체크포인터가 필요하다."""
     graph = build_review_subgraph(dictionary=load_dictionary()).get_graph()
     nodes = set(graph.nodes)
     edges = {(e.source, e.target) for e in graph.edges}
@@ -188,7 +188,7 @@ def test_재개_값이_교정_목록이_아니면_거절한다():
 
 # ── ④ 멈춤과 재개 ───────────────────────────────────────────────────────────
 def _paused(queue: list[ReviewItem], thread: str):
-    """서브그래프를 큐만 넣고 돌려 멈춘 상태를 만든다. **번들도 거래도 없다** (D-036②)."""
+    """서브그래프를 큐만 넣고 돌려 멈춘 상태를 만든다. **번들도 거래도 없다**."""
     graph = build_review_subgraph(dictionary=load_dictionary(), checkpointer=build_checkpointer())
     config = {"configurable": {"thread_id": thread}}
     graph.invoke({"review_queue": queue}, config)
@@ -196,7 +196,7 @@ def _paused(queue: list[ReviewItem], thread: str):
 
 
 def test_서브그래프는_큐만으로_혼자_돈다():
-    """Streamlit S1 이 파이프라인을 다시 돌리지 않고 이것만 부를 수 있어야 한다 (D-018)."""
+    """Streamlit S1 이 파이프라인을 다시 돌리지 않고 이것만 부를 수 있어야 한다."""
     graph, config = _paused([_item("을지로호프", 71)], "solo")
     pending = pending_review(graph, config)
 
@@ -295,7 +295,7 @@ def test_허용_목록에_상태_스키마가_다_들어_있다():
 
 # ── ⑤ 사람만이 새 브랜드를 만든다 ───────────────────────────────────────────
 def test_사전에_없는_브랜드는_새_항목이_된다():
-    """자동 승격이 **원리적으로** 못 하는 일이고, 남은 276건을 여는 열쇠다 (D-033)."""
+    """자동 승격이 **원리적으로** 못 하는 일이고, 남은 276건을 여는 열쇠다."""
     base = load_dictionary()
     proposals = propose_from_corrections([_correction("을지로호프", NEW_BRAND)], dictionary=base)
 

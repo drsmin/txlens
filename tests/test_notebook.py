@@ -1,4 +1,4 @@
-"""제출 노트북이 실행 프로그램과 어긋나지 않는다 (D-018 · D-058 · 부록 H).
+"""제출 노트북이 실행 프로그램과 어긋나지 않는다 (부록 H).
 
 노트북은 **출력이 저장된 채로** 제출된다. 채점자는 대개 실행하지 않고 읽는다 — 그러니 지켜야 할
 것은 "돌리면 맞다"가 아니라 **"저장된 수가 지금 패키지가 내는 수와 같다"**이다. 패키지를 고치고
@@ -49,7 +49,7 @@ def _stdout(cell: dict) -> str:
 
 
 def test_노트북_셀에_로직_정의가_없다():
-    """셀에 `def`/`class` 가 생기는 순간 진실이 둘이 된다 (D-018) — 로직은 `src/txlens/` 에만."""
+    """셀에 `def`/`class` 가 생기는 순간 진실이 둘이 된다 — 로직은 `src/txlens/` 에만."""
     offenders = []
     for i, cell in enumerate(_code_cells()):
         # `%pip` 같은 매직 줄은 파이썬이 아니다
@@ -78,7 +78,7 @@ def test_그래프_그림이_코드와_같다고_저장돼_있다():
 
 @pytest.mark.skipif(
     not DEFAULT_BUNDLE_DIR.exists() or not DEFAULT_TRUTH_PATH.exists(),
-    reason="합성 데이터가 없다 — `python -m txlens.generator --seed 42` (docs/recovery.md)",
+    reason="합성 데이터가 없다 — `python -m txlens.generator --seed 42` (README 참고)",
 )
 def test_저장된_베이스라인_표가_지금_패키지가_내는_표와_같다():
     """노트북 4절의 A·C 표를 지금 다시 계산해 **글자 그대로** 대조한다 (재생이라 API 0 · 결정론).

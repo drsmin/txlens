@@ -1,16 +1,16 @@
-"""2부 탐지 결과의 계약 (blueprint §3.6).
+"""2부 탐지 결과의 계약 (설계 §3.6).
 
 ## 알림에는 반드시 근거 문장이 붙는다
 
 `evidence` 는 장식이 아니다. 이 프로젝트의 출력은 차단이 아니라 **"확인해 보세요"** 이고, 판단은
-고객이 한다(blueprint §3.6). 근거 없이 "이상합니다"만 띄우면 고객이 확인할 방법이 없어 알림이
+고객이 한다(설계 §3.6). 근거 없이 "이상합니다"만 띄우면 고객이 확인할 방법이 없어 알림이
 소음이 된다. 그래서 탐지기는 판정과 함께 **왜 그렇게 봤는지**를 같은 객체에 담아 돌려준다.
 
 ## 승인번호를 항상 들고 다닌다
 
 평가가 대표명이나 카테고리로 정답을 맞추면, 분류 품질이 달라질 때 **탐지가 맞았는지 이름이
 맞았는지**를 구분할 수 없다. 승인번호는 분류와 무관하게 고정된 값이라 이 둘을 분리해 준다 —
-§5.2 전이 실험이 성립하는 이유다(D-035).
+§5.2 전이 실험이 성립하는 이유다.
 """
 
 from __future__ import annotations
@@ -22,7 +22,7 @@ from pydantic import BaseModel, Field
 
 from txlens.schemas import CategoryL1
 
-#: 구독 주기 판정 — 중앙값 간격이 이 범위 안에 들어와야 한다 (blueprint §3.6 ①).
+#: 구독 주기 판정 — 중앙값 간격이 이 범위 안에 들어와야 한다 (설계 §3.6 ①).
 PeriodKind = Literal["weekly", "monthly", "yearly"]
 
 
@@ -67,7 +67,7 @@ class SpendingAlert(BaseModel):
     month: str = Field(description="YYYY-MM")
     amount: int
     #: MAD 기반 robust z-score. 평균·표준편차를 쓰지 않는 이유는 이상치 자체가 통계를
-    #: 오염시키기 때문이다 (blueprint §3.6 ②).
+    #: 오염시키기 때문이다 (설계 §3.6 ②).
     robust_z: float = 0.0
     approval_nos: list[str] = Field(default_factory=list)
     evidence: str = ""

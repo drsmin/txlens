@@ -4,17 +4,17 @@
 
 `agents/tools.py` 의 도구 3종은 지금 `llm_classify` 안에서만 산다. 그런데 그 도구가 답하는
 질문("이 표기는 사전에 뭐랑 비슷한가", "이 업종에 쓸 수 있는 카테고리가 뭔가")은 **사람이
-사전을 고칠 때 던지는 질문과 똑같다** — HITL 승격 루프(D-033)에서 사람이 하는 일이 바로 그것이다.
+사전을 고칠 때 던지는 질문과 똑같다** — HITL 승격 루프에서 사람이 하는 일이 바로 그것이다.
 같은 질문에 답하는 코드가 에이전트 안에만 있으면, 사람은 Streamlit 을 띄우거나 파이썬을 열어야 한다.
 
-MCP 는 그 경계를 표준 프로토콜로 연다. 서버 하나를 stdio 로 띄우면 **에이전트도, Claude Code 도,
-Claude Desktop 도 같은 도구를 부른다.** 도구를 두 번 구현하지 않는다는 것이 핵심이다.
+MCP 는 그 경계를 표준 프로토콜로 연다. 서버 하나를 stdio 로 띄우면 **에이전트도, 외부 MCP 클라이언트도
+같은 도구를 부른다.** 도구를 두 번 구현하지 않는다는 것이 핵심이다.
 
 ## 그래서 로직을 복사하지 않는다
 
 이 모듈은 도구를 **다시 만들지 않는다** — `make_tools()` 가 만든 LangChain 도구를 그대로 감싸고,
 설명 문자열까지 `BaseTool.description` 에서 가져온다. 노트북이 패키지를 import 하게 한 것과 같은
-이유다 (D-018): 같은 말을 두 곳에 적으면 한 곳만 고쳐지는 날이 반드시 온다.
+이유다 — 같은 말을 두 곳에 적으면 한 곳만 고쳐지는 날이 반드시 온다.
 
 ## 사전은 인자로 받는다
 
@@ -38,7 +38,7 @@ from txlens.taxonomy import Taxonomy, load_taxonomy
 
 #: 조회용 가짜 거래의 고정 시각. 값은 아무래도 좋지만 **고정**이어야 한다 — 같은 이름을 두 번
 #: 물어보면 같은 답이 나와야 사람이 사전을 고친 효과를 이 도구로 확인할 수 있다.
-PROBE_DATETIME = datetime(2026, 1, 1, 12, 0)  # noqa: DTZ001 — tz 없는 KST (D-009)
+PROBE_DATETIME = datetime(2026, 1, 1, 12, 0)  # noqa: DTZ001 — tz 없는 KST
 
 SERVER_NAME = "txlens"
 
@@ -73,7 +73,7 @@ def build_server(
 
     # ── ① 에이전트 도구 3종을 그대로 내보낸다 ──────────────────────────────
     # 설명까지 `BaseTool.description` 에서 가져온다. 여기에 설명을 새로 쓰면 에이전트가 읽는
-    # 설명과 Claude 가 읽는 설명이 갈라진다 — 같은 도구가 두 개가 되는 것이다.
+    # 설명과 MCP 클라이언트가 읽는 설명이 갈라진다 — 같은 도구가 두 개가 되는 것이다.
     lc_tools = {t.name: t for t in make_tools(dictionary=dictionary, taxonomy=taxonomy)}
 
     def lookup_alias(name: str) -> str:
@@ -126,7 +126,7 @@ def build_server(
         if normalized.payment_channel is not None:
             lines.append(f"결제채널: {normalized.payment_channel.value}")
         if normalized.pg_masked:
-            lines.append("PG 경유 — 실가맹점을 알 수 없다. **미분류가 정답이다** (D-012)")
+            lines.append("PG 경유 — 실가맹점을 알 수 없다. **미분류가 정답이다**")
         lines += [
             f"대표 가맹점명: {result.merchant_canonical}",
             f"카테고리: {result.category_l2.value} ({taxonomy.label(result.category_l2.value)})",

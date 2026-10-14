@@ -1,4 +1,4 @@
-"""가맹점명 정규화 — 결정론 규칙만. LLM 없음 (blueprint §3.3 ①).
+"""가맹점명 정규화 — 결정론 규칙만. LLM 없음 (설계 §3.3 ①).
 
 **여기서 정확도의 절반이 결정된다.** 규칙은 전부 순수 함수로 두고 규칙별로 테스트를 잠근다.
 
@@ -9,7 +9,7 @@ PG사명·간편결제 프리픽스 목록이 `generator/brands.py` 에도 있�
 `tests/test_preprocess.py` 가 "생성기가 만드는 모든 프리픽스·PG명을 전처리가 처리하는가"를
 검사해 드리프트를 잡는다 (`test_taxonomy_sync.py` 와 같은 방식).
 
-이 목록들은 **닫힌 공개 목록**이라 사전에 적어두는 것이 누출이 아니다 (D-022) — 누출 우려는
+이 목록들은 **닫힌 공개 목록**이라 사전에 적어두는 것이 누출이 아니다 — 누출 우려는
 롱테일인 *브랜드* 사전에만 적용된다. 반대로 이걸 비워두면 전처리가 실무보다 무능해진다.
 """
 
@@ -36,7 +36,7 @@ CHANNEL_PREFIXES: tuple[tuple[str, PaymentChannel], ...] = (
     ("SSGPAY*", PaymentChannel.SSGPAY),
 )
 
-#: 배달앱은 **채널이면서 카테고리 힌트**(food.delivery)다. 별도로 둔다 (blueprint §3.3 ①).
+#: 배달앱은 **채널이면서 카테고리 힌트**(food.delivery)다. 별도로 둔다 (설계 §3.3 ①).
 #: 구분자가 없는 형태로 붙어 오므로, 뒤에 실가맹점명이 남을 때만 자른다 — 아래 주의 참고.
 DELIVERY_PREFIXES: tuple[tuple[str, PaymentChannel], ...] = (
     ("배달의민족", PaymentChannel.BAEMIN),
@@ -44,7 +44,7 @@ DELIVERY_PREFIXES: tuple[tuple[str, PaymentChannel], ...] = (
     ("요기요", PaymentChannel.YOGIYO),
 )
 
-#: PG사 경유 — 실가맹점명이 소실된 경우. **추측하지 않는다** (blueprint §3.3 ①).
+#: PG사 경유 — 실가맹점명이 소실된 경우. **추측하지 않는다** (설계 §3.3 ①).
 #: 법인 표기를 제거한 형태로 적는다 (`(주)케이지이니시스` → `케이지이니시스`).
 PG_NAMES: frozenset[str] = frozenset({
     "케이지이니시스",
@@ -131,7 +131,7 @@ def strip_channel(name: str) -> tuple[str, PaymentChannel | None]:
 def strip_corporate(name: str) -> str:
     """법인 표기 제거. `(주)스타벅스커피코리아` → `스타벅스커피코리아`.
 
-    **법인명 자체를 브랜드로 바꾸지는 않는다** — 그건 사전(alias)의 일이다 (D-022).
+    **법인명 자체를 브랜드로 바꾸지는 않는다** — 그건 사전(alias)의 일이다.
     여기서는 표기만 벗긴다.
     """
     prev = None

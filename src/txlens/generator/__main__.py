@@ -1,6 +1,4 @@
-"""`python -m txlens.generator --seed 42`
-
-docs/recovery.md 재개 절차가 이 명령을 호출한다. 데이터는 커밋하지 않고 시드로 재현한다.
+"""`python -m txlens.generator --seed 42` 데이터는 커밋하지 않고 시드로 재현한다.
 """
 
 from __future__ import annotations
@@ -35,7 +33,7 @@ def main(argv: list[str] | None = None) -> int:
         customers=args.customers,
         months=args.months,
         per_month=args.per_month,
-        # tz 없는 KST 로 통일 (D-009). 오프셋을 요구하면 CLI 사용성만 나빠진다.
+        # tz 없는 KST 로 통일. 오프셋을 요구하면 CLI 사용성만 나빠진다.
         period_end=datetime.strptime(args.period_end, "%Y-%m-%d"),  # noqa: DTZ007
     )
     stats = write_dataset(txs, gt, args.out)

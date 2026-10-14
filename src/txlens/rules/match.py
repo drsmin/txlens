@@ -1,7 +1,7 @@
-"""5단계 룰 매칭 — 빠르고 확실한 것부터 (blueprint §3.3 ②).
+"""5단계 룰 매칭 — 빠르고 확실한 것부터 (설계 §3.3 ②).
 
     ① exact  — 정규화 완전일치 (dict lookup, O(1))
-    ② regno  — 사업자등록번호. 있고 사전에 등록된 경우만. 보조 신호다 (D-012)
+    ② regno  — 사업자등록번호. 있고 사전에 등록된 경우만. 보조 신호다
     ③ alias  — 법인명·로마자 → 브랜드
     ④ regex  — 접두 패턴 (공백 없이 붙은 지점명 등)
     ⑤ fuzzy  — `rapidfuzz.token_sort_ratio >= 임계값`. 미달은 **미매칭으로 남긴다**
@@ -15,7 +15,7 @@
 ## 못 잡은 것은 못 잡았다고 답한다
 
 임계값 미달을 억지로 가장 비슷한 브랜드에 붙이면 정확도는 오르지만 **틀린 답이 조용히 섞인다**
-— 그 위에서 도는 2부(구독·이상지출)가 전부 거짓말이 된다(D-010). 미매칭은 `미분류` 라는 정당한
+— 그 위에서 도는 2부(구독·이상지출)가 전부 거짓말이 된다. 미매칭은 `미분류` 라는 정당한
 답으로 내보내고, LLM·사람이 이어받는다.
 """
 
@@ -31,7 +31,7 @@ from txlens.schemas import CategoryL1, CategoryL2, ClassifiedTx, MatchStage, Nor
 
 #: 단계별 신뢰도. **exact 만 1.0** 이고 뒤로 갈수록 낮다 — HITL 검토 큐가 이 값으로 정렬되므로
 #: (`ReviewItem.priority`) 순서가 뒤집히면 사람이 엉뚱한 것부터 고친다.
-#: regno 가 alias 보다 낮은 이유: 점포 단위이고 제공기관에 따라 신뢰도가 다르다 (D-012).
+#: regno 가 alias 보다 낮은 이유: 점포 단위이고 제공기관에 따라 신뢰도가 다르다.
 STAGE_CONFIDENCE: dict[MatchStage, float] = {
     MatchStage.EXACT: 1.0,
     MatchStage.ALIAS: 0.95,
@@ -43,11 +43,11 @@ STAGE_CONFIDENCE: dict[MatchStage, float] = {
 #: 추정이 완전일치와 같은 신뢰도를 갖는다.
 FUZZY_CONFIDENCE_CAP = 0.95
 
-#: 유사도 스코어러. **`token_set_ratio` 를 쓰지 않는다** (blueprint 초안에서 바꿈 — D-024).
+#: 유사도 스코어러. **`token_set_ratio` 를 쓰지 않는다** (초안에서 바꿈).
 #: `token_set_ratio` 는 한쪽 토큰 집합이 다른 쪽의 **부분집합이면 100 점**을 준다. 그래서
 #: `STEP GYM`(사전에 없는 tail 브랜드) → `STEP GYM MEMBERSHIP`(사전의 구독 브랜드) 처럼
 #: **모르는 가맹점을 사전의 긴 이름에 흡수시킨다.** 구독 탐지가 그 위에서 돌면 일회성 결제를
-#: 구독 결제로 세므로 2부가 조용히 거짓말을 한다 (D-010).
+#: 구독 결제로 세므로 2부가 조용히 거짓말을 한다.
 #: `token_sort_ratio` 는 어순·오타는 그대로 흡수하면서(위 예시들의 점수가 동일하다) 부분집합에는
 #: 낮은 점수를 준다. `WRatio` 도 같은 함정이 있어(부분집합에 90점) 쓰지 않는다.
 FUZZY_SCORER = fuzz.token_sort_ratio

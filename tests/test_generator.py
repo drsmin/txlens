@@ -48,7 +48,7 @@ def test_period_end_is_explicit_not_now(dataset):
     assert gt.period_start == "2026-05-01"
 
 
-# ── 롱테일 (이 프로젝트가 풀려는 문제가 실제로 존재하는가) ───────────────────
+# ── 롱테일 (이 프로젝트가 풀려는 문제가 실제로 존재하는가) ──────────────────
 def test_distinct_names_far_exceed_brands(dataset):
     """오염이 실제로 일어났는가 — 표기 수가 브랜드 수보다 훨씬 많아야 한다."""
     from txlens.generator.brands import ALL_BRANDS
@@ -69,7 +69,7 @@ def test_name_distribution_is_long_tailed(dataset):
     assert singletons > 0.30, f"1회성 표기 비율 {singletons:.2f} — tail 이 없다"
 
 
-# ── 제공기관 프로파일 준수 (D-012) ──────────────────────────────────────────
+# ── 제공기관 프로파일 준수 ──────────────────────────────────────────────────
 def test_regno_fill_rate_follows_profile(dataset):
     txs, _ = dataset
     pset = load_providers()
@@ -172,7 +172,7 @@ def test_undetectable_are_reported_not_hidden(dataset):
         assert s.occurrences < 3
 
 
-# ── 오탐 함정이 진짜 함정인가 (precision 을 재려면 필수) ─────────────────────
+# ── 오탐 함정이 진짜 함정인가 (precision 을 재려면 필수) ────────────────────
 def test_subscription_like_decoy_has_high_cv(dataset):
     """구독처럼 보이지만 금액 변동이 커서 CV 조건에 걸러져야 한다."""
     txs, gt = dataset
@@ -299,7 +299,7 @@ def test_envelope_uses_spec_field_names_and_string_amounts(dataset):
 
 
 def test_envelope_has_no_fields_outside_the_spec(dataset):
-    """규격에 없는 필드를 지어내면 "실제 규격대로 만들었다"는 주장이 무너진다 (D-023).
+    """규격에 없는 필드를 지어내면 "실제 규격대로 만들었다"는 주장이 무너진다.
 
     `merchant_category` 가 그런 필드였다 — 어느 업권 규격에도 없는데 봉투에 있었다.
     """
@@ -314,7 +314,7 @@ def test_envelope_has_no_fields_outside_the_spec(dataset):
 
 
 def test_installment_count_is_omitted_for_lump_sum(dataset):
-    """규격: `total_install_cnt` 는 **일시불일 경우 미회신** (D-023).
+    """규격: `total_install_cnt` 는 **일시불일 경우 미회신**.
 
     `"0"` 을 채워 보내면 수신 측이 "할부 정보가 왔다"고 착각한다 — 조건부 미회신의 요점.
     """
@@ -327,7 +327,7 @@ def test_installment_count_is_omitted_for_lump_sum(dataset):
 
 
 def test_pay_type_is_credit_or_check_only(dataset):
-    """`card_pay_type` = {01 신용, 02 체크}. 일시불/할부 구분이 아니다 (D-023)."""
+    """`card_pay_type` = {01 신용, 02 체크}. 일시불/할부 구분이 아니다."""
     txs, _ = dataset
     seen = {to_approved_item(t)["pay_type"] for t in txs}
     assert seen == {"01", "02"}, f"신용·체크 양쪽이 나와야 한다: {seen}"

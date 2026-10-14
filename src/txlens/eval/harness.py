@@ -3,7 +3,7 @@
 베이스라인 비교(A 룰만 / B LLM만 / C 하이브리드)의 신뢰는 "같은 입력·같은 모수"에서 나온다.
 그래서 셋이 모두 **같은 그래프**를 돌고(`txlens.graph.run_pipeline`), 바뀌는 것은 주입물 둘
 (사전·분류기)뿐이다. 노트북·Streamlit·CLI 가 모두 이 함수를 호출한다 — 로직을 세 곳에 복사하지
-않는다 (D-018).
+않는다.
 
 ## (B) 는 사전을 도구에서도 뺀다
 
@@ -103,7 +103,7 @@ def run_baseline_state(
 
     승격 루프(`txlens.promote`)는 지표가 아니라 상태 안의 `rule_proposals` 를 가져가야 한다.
     그 한 필드 때문에 파이프라인 실행을 한 벌 더 만들면 라운드와 베이스라인이 서로 다른 코드를
-    도는 셈이 되어, 두 표의 숫자를 나란히 놓을 수 없다 (D-018).
+    도는 셈이 되어, 두 표의 숫자를 나란히 놓을 수 없다.
     """
     state = run_pipeline(
         bundle_dir,
@@ -188,7 +188,7 @@ def run_hybrid_baseline(
 
 
 def compare_table(rows: list[tuple[EvalResult, RunMetrics | None]]) -> str:
-    """A/B/C 비교표 (blueprint §5.1).
+    """A/B/C 비교표 (설계 §5.1).
 
     **거래 기준과 정규화 키 기준을 나란히 둔다.** 하나만 내면 어느 쪽이든 사실을 왜곡한다 —
     건수로는 상위 브랜드가 대부분을 덮고, 표기 수로는 꼬리가 훨씬 길다. 그 격차가 이 프로젝트의
@@ -209,7 +209,7 @@ def compare_table(rows: list[tuple[EvalResult, RunMetrics | None]]) -> str:
         )
     lines += [
         "",
-        "  · 커버리지 + 미매칭 + PG마스킹 = 100%. PG마스킹은 **원리적 한계**라 줄지 않는다 (D-024②).",
+        "  · 커버리지 + 미매칭 + PG마스킹 = 100%. PG마스킹은 **원리적 한계**라 줄지 않는다.",
         "  · LLM 이 '모른다'고 답한 표기는 미매칭에 남는다 — 미분류를 커버리지로 세지 않는다.",
     ]
     skipped = [m for _r, m in rows if m and m.llm_targets_skipped]

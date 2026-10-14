@@ -132,7 +132,7 @@ class RuleDictionary(BaseModel):
 
     @functools.cached_property
     def regno_index(self) -> dict[str, RuleEntry]:
-        """숫자만 남긴 키로 색인한다 — 기관마다 하이픈 유무가 다르다 (D-023)."""
+        """숫자만 남긴 키로 색인한다 — 기관마다 하이픈 유무가 다르다."""
         return {regno_key(raw): e for e in self.entries for raw in e.regno}  # type: ignore[misc]
 
     @functools.cached_property

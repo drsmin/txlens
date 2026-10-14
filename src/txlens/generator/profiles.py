@@ -1,4 +1,4 @@
-"""`config/provider-profiles.yaml` 로더 (D-012).
+"""`config/provider-profiles.yaml` 로더.
 
 제공기관별 표기 관행을 담은 단일 출처. 생성기는 이 프로파일만 보고 오염 강도를 결정하고,
 평가는 같은 `provider_id` 축으로 지표를 쪼갠다.

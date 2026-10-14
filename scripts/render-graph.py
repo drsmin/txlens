@@ -10,8 +10,8 @@
 
 | 그림 | 무엇 | 요점 |
 | --- | --- | --- |
-| `langgraph-agent` | `llm_classify` 노드 **안** (`create_agent`) | 가드레일은 설정이 아니라 **노드**다 (D-031) |
-| `langgraph-review` | `review` 상자 **안** (`build_review_subgraph()`) | 멈출 수 있는 부분이 곧 서브그래프 경계다 (D-036②) |
+| `langgraph-agent` | `llm_classify` 노드 **안** (`create_agent`) | 가드레일은 설정이 아니라 **노드**다 |
+| `langgraph-review` | `review` 상자 **안** (`build_review_subgraph()`) | 멈출 수 있는 부분이 곧 서브그래프 경계다 |
 
 `langgraph-c` 와 `langgraph-c-hitl` 을 **둘 다** 뽑는 이유: 평가 하네스가 도는 것은 앞의 것이고
 (HITL 은 꺼져 있다) 데모가 도는 것은 뒤의 것이다. 하나만 그리면 그 그림이 둘 중 하나에 대해
@@ -27,7 +27,7 @@
     python scripts/render-graph.py --check    # 커밋된 .mmd 와 지금 그래프가 같은지만 본다 (오프라인)
 
 ⚠ PNG 렌더는 LangGraph 기본 경로라 **mermaid.ink 로 그래프 원문이 나간다**(노드 이름뿐 —
-거래 데이터·가맹점명은 없다). 그 판단은 D-029. 그래서 `--check` 는 네트워크를 쓰지 않는다.
+거래 데이터·가맹점명은 없다). 그 판단은 설계에 기록했다. 그래서 `--check` 는 네트워크를 쓰지 않는다.
 """
 
 from __future__ import annotations

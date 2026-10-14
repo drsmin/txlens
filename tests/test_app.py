@@ -1,4 +1,4 @@
-"""S1 검토 화면 — 화면이 **사람이 고친 것을 사전까지 옮기는가** (blueprint §3.5 · D-037).
+"""S1 검토 화면 — 화면이 **사람이 고친 것을 사전까지 옮기는가** (설계 §3.5).
 
 화면 테스트가 필요한 이유는 미학이 아니다. 이 화면에는 실패해도 화면이 멀쩡해 보이는 자리가
 넷 있고, 넷 다 같은 방식으로 나타난다 — **화면은 "반영됨"이라 적고 사전에는 없다.**
@@ -67,7 +67,7 @@ def test_교정_칸은_LLM_답으로_미리_채운다():
 
 
 def test_표에_거래는_없다():
-    """화면이 보는 것은 표기와 판정뿐이다 — 전송 경계와 같은 선택이다 (D-036②)."""
+    """화면이 보는 것은 표기와 판정뿐이다 — 전송 경계와 같은 선택이다."""
     (row,) = ui.queue_rows({"queued": 1, "items": [_payload_item()]})
     assert not {k for k in row if "거래" in k and k != "건수"}
 
@@ -193,7 +193,7 @@ def test_debug_청크를_사람_말로_바꾼다():
 
 
 def test_interrupt_로_멈춘_태스크는_그렇게_찍는다():
-    """HITL 이 어느 태스크에서 멈췄는지가 debug 로만 보인다 (D-037)."""
+    """HITL 이 어느 태스크에서 멈췄는지가 debug 로만 보인다."""
     line = ui.debug_line(
         {"type": "task_result", "step": 2, "payload": {"name": "human_review", "result": {}, "interrupts": [{"value": {}}]}}
     )
@@ -247,7 +247,7 @@ def test_큐가_표로_그려진다(s1):
 
 
 def test_고친_것이_없어도_제출이_돌고_자동_승격만_올라간다():
-    """빈 교정도 정당한 답이다 — 사람을 부른 것이 곧 고쳤다는 뜻은 아니다 (D-037)."""
+    """빈 교정도 정당한 답이다 — 사람을 부른 것이 곧 고쳤다는 뜻은 아니다."""
     from streamlit.testing.v1 import AppTest
 
     app = AppTest.from_file(str(ui.ROOT / "app" / "pages" / "1_검토_큐.py"), default_timeout=120)
@@ -273,7 +273,7 @@ def test_로그는_본문_옆_칸에_있다(s1):
 
 
 def test_기본_상세도는_요약이다(s1):
-    """**화면이 녹화돼 발표에 들어가기 때문이다** (D-053). 영상이 슬라이드 크기로 줄면 debug
+    """**화면이 녹화돼 발표에 들어가기 때문이다**. 영상이 슬라이드 크기로 줄면 debug
     45줄은 안 읽힌다. 기본값이 조용히 debug 로 돌아가면 녹화본이 그대로 못 쓰게 된다.
     """
     assert [s.value for s in s1.selectbox if s.label == "로그 상세도"] == [ui.DETAIL_SUMMARY]

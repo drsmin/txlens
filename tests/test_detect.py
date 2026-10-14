@@ -68,7 +68,7 @@ def _monthly(amounts: list[int], *, canonical: str = "넷플릭스", start: date
     ]
 
 
-# ── ① 구독 ─────────────────────────────────────────────────────────────────
+# ── ① 구독 ──────────────────────────────────────────────────────────────────
 def test_monthly_subscription_is_detected_with_next_payment_date():
     subs = detect_subscriptions(_monthly([14900] * 6))
     assert len(subs) == 1
@@ -138,7 +138,7 @@ def test_irregular_interval_is_not_a_subscription():
     assert detect_subscriptions(rows) == []
 
 
-# ── ② 이상지출 ─────────────────────────────────────────────────────────────
+# ── ② 이상지출 ──────────────────────────────────────────────────────────────
 def _baseline_months(total: int, *, months: int = 5, category=CategoryL1.FOOD) -> list[SpendRow]:
     rows = []
     for m in range(months):
@@ -220,7 +220,7 @@ def test_single_large_stays_quiet_when_the_merchant_has_too_few_transactions():
     assert detect_spending_anomalies(few) == []
 
 
-# ── ③ 이상거래패턴 ─────────────────────────────────────────────────────────
+# ── ③ 이상거래패턴 ──────────────────────────────────────────────────────────
 def test_duplicate_charge_needs_same_amount_within_the_window():
     when = datetime(2026, 5, 2, 13, 0)
     same = [
@@ -267,7 +267,7 @@ def test_micro_burst_is_reported_once_not_as_many_duplicates():
     assert alerts[0].amount == 1000
 
 
-# ── 입구 계약 ──────────────────────────────────────────────────────────────
+# ── 입구 계약 ───────────────────────────────────────────────────────────────
 def _classified(no: str, name: str, when: datetime, amount: int, tx_type=TxType.APPROVE):
     raw = RawTx(
         provider_id="CARD_A",
@@ -311,7 +311,7 @@ def test_detect_runs_all_three_and_survives_empty_input():
     assert detect_from_rows([]).summary()
 
 
-# ── 통계 도구 ──────────────────────────────────────────────────────────────
+# ── 통계 도구 ───────────────────────────────────────────────────────────────
 def test_robust_z_falls_back_to_a_ratio_when_mad_is_zero():
     """MAD 가 0 일 때 0 을 주면 '정상'이라 단정하고, 무한대를 주면 전부 알림이 된다."""
     assert robust_z(100.0, [100.0] * 6) == 0.0
@@ -324,10 +324,10 @@ def test_robust_z_is_not_dragged_by_the_outlier_it_is_looking_for():
     assert robust_z(1000.0, sample) > 100
 
 
-# ── 통합: 실제 합성 데이터 위의 §5.2 전이 ──────────────────────────────────
+# ── 통합: 실제 합성 데이터 위의 §5.2 전이 ───────────────────────────────────
 pytestmark_data = pytest.mark.skipif(
     not DEFAULT_BUNDLE_DIR.exists() or not DEFAULT_TRUTH_PATH.exists(),
-    reason="합성 데이터가 없다 — `python -m txlens.generator --seed 42` (docs/recovery.md)",
+    reason="합성 데이터가 없다 — `python -m txlens.generator --seed 42` (README 참고)",
 )
 
 
@@ -338,7 +338,7 @@ def transfer_rows():
 
 @pytestmark_data
 def test_분류가_나빠지면_탐지도_나빠진다(transfer_rows):
-    """§5.2 의 부등호. 이게 뒤집히면 1부와 2부를 묶는 논거가 사라진다 (D-010 · D-035).
+    """§5.2 의 부등호. 이게 뒤집히면 1부와 2부를 묶는 논거가 사라진다.
 
     비교는 **재현율**로 한다. 정밀도는 정답셋이 우연히 생긴 진짜 급증에 라벨을 붙이지 않아
     하한으로만 읽히지만, 재현율의 분모는 심은 것의 수라 흔들리지 않는다.
@@ -377,6 +377,6 @@ def test_이상거래_탐지는_분류에_가장_덜_의존한다(transfer_rows)
 
 @pytestmark_data
 def test_고객당_월_알림이_상한을_넘지_않는다(transfer_rows):
-    """알림은 많을수록 좋은 게 아니다 — 읽히지 않으면 없는 것과 같다 (blueprint §3.6)."""
+    """알림은 많을수록 좋은 게 아니다 — 읽히지 않으면 없는 것과 같다 (설계 §3.6)."""
     for row in transfer_rows:
         assert row.detection.alerts_per_customer_month <= 3.0, row.label

@@ -1,4 +1,4 @@
-"""승격 루프 — 판정을 사전으로 굳히는 층 (blueprint §3.3 ⑤ · D-033).
+"""승격 루프 — 판정을 사전으로 굳히는 층 (설계 §3.3 ⑤).
 
 여기서 막고 싶은 것은 다섯이다.
 
@@ -36,7 +36,7 @@ from txlens.schemas import CategoryL1, CategoryL2, Evidence, LLMTarget, LLMVerdi
 
 pytestmark_data = pytest.mark.skipif(
     not (DEFAULT_BUNDLE_DIR.exists() and DEFAULT_TRUTH_PATH.exists()),
-    reason="합성 데이터가 없다 — `python -m txlens.generator --seed 42` (docs/recovery.md)",
+    reason="합성 데이터가 없다 — `python -m txlens.generator --seed 42` (README 참고)",
 )
 
 #: v1 사전에 있는 브랜드. 별칭 승격의 착지점이다.
@@ -73,7 +73,7 @@ def _replay_for_top(count: int, canonical: str = KNOWN) -> dict[str, LLMVerdict]
     return {t.normalized_name: _verdict(canonical) for t in state["llm_targets"][:count]}
 
 
-# ── ① 자동 승격은 새 브랜드를 만들지 않는다 (D-033) ─────────────────────────
+# ── ① 자동 승격은 새 브랜드를 만들지 않는다 ─────────────────────────────────
 def test_사전에_있는_브랜드로_이을_때만_승격한다():
     """`타벅스 → 스타벅스` 는 올리고, `을지로호프 → 을지로호프` 는 올리지 않는다.
 
@@ -303,7 +303,7 @@ def test_상한에서_버려진_승격을_표가_경고한다(tmp_path):
     """상한에서 멈추면 그 라운드의 승격은 파일로 안 나간다 — **말해주지 않으면 호출만 날린다.**
 
     실제로 그랬다: `--rounds 1` 로 돌려 승격 7건이 조용히 버려지고 417호출이 산출물 없이
-    끝났다 (D-056). 버리는 것 자체는 의도다(지표가 없는 사전은 쓰지 않는다). 버렸다는 **사실과
+    끝났다. 버리는 것 자체는 의도다(지표가 없는 사전은 쓰지 않는다). 버렸다는 **사실과
     되찾는 방법**이 표에 있어야 한다.
     """
     reports = run_rounds(
@@ -399,7 +399,7 @@ def test_재생으로_돈_라운드는_모델을_부르지_않는다():
     assert reports[0].promoted > 0, "재생 판정이 승격까지 이어지지 않았다"
 
 
-# ── ⑦ 문턱을 정답셋으로 정한다 (D-033) ──────────────────────────────────────
+# ── ⑦ 문턱을 정답셋으로 정한다 ──────────────────────────────────────────────
 def test_보정표는_문턱마다_정밀도와_덮는_거래를_함께_낸다():
     """정밀도만 보면 문턱을 1.0 으로 올리는 것이 언제나 이긴다 — 승격이 0 건이어도 그렇다."""
     targets = [_target("맞는판정", 71), _target("틀린판정", 30)]

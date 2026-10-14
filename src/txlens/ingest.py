@@ -26,7 +26,7 @@ from txlens.schemas import CardType, RawTx, TxType
 #: 표준API 카드 승인내역(CD03) 정상 응답 코드.
 RSP_CODE_OK = "00000"
 
-#: `status` = 결제상태. **네 값을 모두 받는다** — 규격 코드셋 `card_approval_status` (D-023).
+#: `status` = 결제상태. **네 값을 모두 받는다** — 규격 코드셋 `card_approval_status`.
 #: 01/02 만 알던 판본은 실데이터의 정정·무승인매입을 만나면 죽었다.
 STATUS_APPROVED = "01"
 STATUS_CANCELLED = "02"
@@ -40,7 +40,7 @@ _TX_TYPE_BY_STATUS = {
     STATUS_UNAPPROVED: TxType.UNAPPROVED,
 }
 
-#: `pay_type` = **신용/체크** 구분이다 (`card_pay_type`). 할부 여부가 아니다 — D-023.
+#: `pay_type` = **신용/체크** 구분이다 (`card_pay_type`). 할부 여부가 아니다.
 _CARD_TYPE_BY_PAY_TYPE = {"01": CardType.CREDIT, "02": CardType.CHECK}
 
 #: 번들 파일명 규약 — `{provider_id}_{customer_id}_CD03.json` (emit.py).
@@ -87,7 +87,7 @@ def parse_amount(text: str) -> int:
 
 
 def parse_dtime(text: str) -> datetime:
-    """`"20260315143000"` → `datetime`. tz 없는 KST 로 둔다 (D-009)."""
+    """`"20260315143000"` → `datetime`. tz 없는 KST 로 둔다."""
     try:
         return datetime.strptime(text.strip(), "%Y%m%d%H%M%S")  # noqa: DTZ007
     except ValueError as exc:
@@ -100,7 +100,7 @@ def to_raw_tx(item: dict, *, provider_id: str, customer_id: str) -> RawTx:
     **취소는 금액을 음수로 뒤집는다.** 규격은 부호 없는 금액 + `status` 코드로 표현하지만,
     파이프라인 안에서는 부호로 다루는 편이 상계·집계가 단순하다. 이 변환을 한곳에 모아둔다.
 
-    `status` 4종을 모두 받는다 (D-023) — 정정(03)은 `modified_amt` 가 실지출이고,
+    `status` 4종을 모두 받는다 — 정정(03)은 `modified_amt` 가 실지출이고,
     무승인매입(04)은 승인이 없었을 뿐 실지출이라 분류·탐지 대상이다.
     """
     for key in ("approved_num", "approved_dtime", "approved_amt", "merchant_name"):
@@ -121,7 +121,7 @@ def to_raw_tx(item: dict, *, provider_id: str, customer_id: str) -> RawTx:
         amount = -amount
 
     # 할부 회차는 **회신 여부**로만 판단한다. 규격이 "일시불일 경우 미회신"이라 못박았으므로
-    # 키가 없으면 일시불이다. `pay_type` 은 신용/체크 구분이라 여기서 쓸 값이 아니다 (D-023).
+    # 키가 없으면 일시불이다. `pay_type` 은 신용/체크 구분이라 여기서 쓸 값이 아니다.
     installment = 0
     raw_cnt = _optional(item.get("total_install_cnt"))
     if raw_cnt is not None:
@@ -155,7 +155,7 @@ def to_raw_tx(item: dict, *, provider_id: str, customer_id: str) -> RawTx:
         installment_months=installment,
         card_type=card_type,
         # 조건부 미회신 — **키가 없는 것과 빈 문자열을 같게 다룬다.** 빈 문자열을 값으로
-        # 받아들이면 "regno 가 있다"고 착각해 REGNO 매칭 단계가 헛돈다 (D-012).
+        # 받아들이면 "regno 가 있다"고 착각해 REGNO 매칭 단계가 헛돈다.
         # 규격 형태(하이픈 포함)를 그대로 보존한다 — 매칭 시 `preprocess.regno_key()` 를 쓴다.
         merchant_regno=_optional(item.get("merchant_regno")),
     )
@@ -192,7 +192,7 @@ def load_bundle(
     if not isinstance(items, list):
         raise IngestError(f"{source}: approved_list 가 없거나 배열이 아니다")
 
-    # `next_page` 가 있으면 **페이지가 더 있다** (규격: 마지막 페이지면 미회신 — D-023).
+    # `next_page` 가 있으면 **페이지가 더 있다** (규격: 마지막 페이지면 미회신).
     # 한 페이지만 읽고 끝내면 거래의 일부만 보고 지표를 내게 된다. 생성기는 페이지네이션을
     # 만들지 않지만, 실연동에서 이 경로를 조용히 지나가지 않도록 여기서 막는다.
     if _optional(payload.get("next_page")) is not None:

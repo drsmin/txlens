@@ -32,7 +32,7 @@ def _raw(**kw) -> RawTx:
         "customer_id": "SYNTH_0001",
         "approval_no": "12345678",
         # tz 없는 KST 로컬 시각 — 표준API 가 오프셋 없이 주는 형태를 그대로 쓴다.
-        # DTZ001 은 pyproject 의 per-file-ignores 에서 tests/ 에만 허용한다 (D-009).
+        # DTZ001 은 pyproject 의 per-file-ignores 에서 tests/ 에만 허용한다.
         "tx_datetime": datetime(2026, 8, 1, 12, 30),
         "merchant_name_raw": "(주)스타벅스커피코리아 1234호점",
         "amount": 5500,
@@ -70,7 +70,7 @@ def test_l2_property_derives_l1():
     assert CategoryL2.FINANCE_CASH.l1 is CategoryL1.FINANCE
 
 
-# ── confidence 범위 ────────────────────────────────────────────────────────
+# ── confidence 범위 ─────────────────────────────────────────────────────────
 @pytest.mark.parametrize("bad", [-0.01, 1.01])
 def test_confidence_out_of_range_rejected(bad):
     with pytest.raises(ValidationError):
@@ -99,9 +99,9 @@ def test_plain_tx_is_classifiable():
     assert NormalizedTx(raw=_raw(), normalized_name="스타벅스").is_classifiable
 
 
-# ── 전처리 산출물 보존 ─────────────────────────────────────────────────────
+# ── 전처리 산출물 보존 ──────────────────────────────────────────────────────
 def test_channel_and_branch_are_preserved_not_dropped():
-    """채널·지점은 정규화 과정에서 버리지 않고 필드로 보존한다 (blueprint §3.3 ①)."""
+    """채널·지점은 정규화 과정에서 버리지 않고 필드로 보존한다 (설계 §3.3 ①)."""
     n = NormalizedTx(
         raw=_raw(merchant_name_raw="NAVERPAY*스타벅스 강남역점"),
         normalized_name="스타벅스",
@@ -153,7 +153,7 @@ def _verdict(conf: float) -> LLMVerdict:
 
 
 def test_review_priority_favours_high_volume_and_low_confidence():
-    """사람의 1분이 가장 많은 거래를 고치게 하는 정렬 (blueprint §3.3 ④)."""
+    """사람의 1분이 가장 많은 거래를 고치게 하는 정렬 (설계 §3.3 ④)."""
     many_unsure = ReviewItem(normalized_name="A", verdict=_verdict(0.5), tx_count=100)
     few_unsure = ReviewItem(normalized_name="B", verdict=_verdict(0.5), tx_count=1)
     many_sure = ReviewItem(normalized_name="C", verdict=_verdict(0.99), tx_count=100)

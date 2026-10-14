@@ -1,4 +1,4 @@
-"""제공기관 프로파일 계약 테스트 (D-012).
+"""제공기관 프로파일 계약 테스트.
 
 이 파일은 생성기 입력이므로 값이 틀리면 데이터 전체가 조용히 비현실적으로 만들어진다.
 확률·비중 같은 수치 제약을 여기서 고정한다.
@@ -49,7 +49,7 @@ def test_ids_unique():
 
 
 def test_spread_is_actually_wide():
-    """편차를 모델링하는 게 목적이므로, 프로파일이 서로 비슷하면 의미가 없다 (D-012)."""
+    """편차를 모델링하는 게 목적이므로, 프로파일이 서로 비슷하면 의미가 없다."""
     fills = [p["regno_fill_rate"] for p in _load()["providers"]]
     assert max(fills) - min(fills) >= 0.5, (
         f"regno 채움률 편차가 {max(fills) - min(fills):.2f} — 기관 간 차이가 너무 작다"

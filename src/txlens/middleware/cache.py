@@ -1,4 +1,4 @@
-"""모델 호출 캐시 — `wrap_model_call` 미들웨어 (blueprint §3.0).
+"""모델 호출 캐시 — `wrap_model_call` 미들웨어 (설계 §3.0).
 
 ## 왜 캐시가 미들웨어인가
 
@@ -12,7 +12,7 @@
 ## 이 캐시가 증명하지 않는 것
 
 "라운드가 돌면 LLM 호출이 줄어든다"는 프로젝트의 주장은 **이 캐시가 아니라 룰 승격**이 만든다
-(blueprint §3.3 ⑤). 사전이 커지면 미매칭이 줄고, 미매칭이 줄면 애초에 보낼 표기가 줄어든다.
+(설계 §3.3 ⑤). 사전이 커지면 미매칭이 줄고, 미매칭이 줄면 애초에 보낼 표기가 줄어든다.
 캐시는 같은 실행 안의 중복만 없앤다 — 둘을 섞어 보고하면 승격 효과를 부풀리게 된다.
 그래서 `RunMetrics` 는 `llm_targets`(승격이 줄이는 값)와 `llm_cache_hits` 를 따로 센다.
 
@@ -70,7 +70,7 @@ class ModelCallCache:
     `RunMetrics` 로 옮겨 담는 편이 단순하다.
     """
 
-    #: 요청 해시 → 응답. 프로세스 안에서만 산다 (`InMemory*` 와 같은 수명 — D-017).
+    #: 요청 해시 → 응답. 프로세스 안에서만 산다 (`InMemory*` 와 같은 수명).
     entries: dict[str, ModelResponse] = field(default_factory=dict)
     calls: int = 0
     hits: int = 0

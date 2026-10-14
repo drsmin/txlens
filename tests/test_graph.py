@@ -1,4 +1,4 @@
-"""LangGraph 배선 — 노드·분기·상태·실행 지표 (blueprint §3.1 · §3.2).
+"""LangGraph 배선 — 노드·분기·상태·실행 지표 (설계 §3.1 · §3.2).
 
 여기서 막고 싶은 것은 넷이다.
 
@@ -6,7 +6,7 @@
    `draw_ascii()` 가 실제로 도는 경로와 다른 것을 보여준다. 발표 자료가 그 그림을 쓴다.
 ② **미분류가 커버리지로 세어지는 것.** LLM 이 "모른다"고 답한 것에 `MatchStage.LLM` 을 붙이면
    `RESOLVED_STAGES` 에 들어가 커버리지가 부푼다. 지표 하나로는 안 보이는 종류의 거짓이다
-   (D-024① 의 `token_set_ratio` 사고와 같은 형태).
+   (앞서의 `token_set_ratio` 사고와 같은 형태).
 ③ **조용한 잘라내기.** 상한 때문에 안 보낸 표기가 "LLM 이 못 잡았다"로 섞이면 부분 측정이
    전수 측정으로 보고된다.
 ④ **A/B/C 가 서로 다른 파이프라인을 도는 것.** 셋이 같은 그래프를 돌지 않으면 비교가 조건
@@ -134,7 +134,7 @@ def test_분류기가_있으면_조건부_분기가_생긴다():
 
 
 def test_전처리와_대상수집이_각각_제_노드다():
-    """노드 경계가 그림의 설명력이다 (D-031).
+    """노드 경계가 그림의 설명력이다.
 
     `pair_cancellations`(집합 판단) 와 `normalize`(건 단위) 를 한 상자에 두면 "전처리"라는 한
     단어가 성질이 다른 둘을 덮는다. `collect_targets` 는 **거래 → 고유 표기**로 단위가 바뀌는
@@ -267,11 +267,11 @@ def test_분류기가_없으면_미전송으로_세지_않는다():
 # ── 통합: 실제 합성 데이터 ──────────────────────────────────────────────────
 pytestmark_data = pytest.mark.skipif(
     not DEFAULT_BUNDLE_DIR.exists() or not DEFAULT_TRUTH_PATH.exists(),
-    reason="합성 데이터가 없다 — `python -m txlens.generator --seed 42` (docs/recovery.md)",
+    reason="합성 데이터가 없다 — `python -m txlens.generator --seed 42` (README 참고)",
 )
 
 #: 미매칭 상위 표기와 그 정답 (`test_eval.py` 가 상위 목록을 따로 잠그고 있다).
-#: `우리동네세탁` 은 쓰지 않는다 — 정답이 **미분류**라 (D-026) "LLM 이 확정했다"는 시나리오를
+#: `우리동네세탁` 은 쓰지 않는다 — 정답이 **미분류**라 "LLM 이 확정했다"는 시나리오를
 #: 만들 수 없다. 여기 넣으면 커버리지가 오르는 것을 확인하려는 테스트가 그 브랜드에서 실패한다.
 _TOP_UNMATCHED = {
     "을지로호프": ("cafe", "cafe.alcohol"),
@@ -352,7 +352,7 @@ def test_같은_입력이면_같은_지표가_나온다():
 def test_지표를_JSON_으로_낼_수_있고_비율이_함께_담긴다():
     """`dataclasses.asdict()` 가 `Counter` 를 `{("exact", 5474): 1}` 로 망가뜨려 전량 실행이
     **끝에서** 죽었다 (30분을 돌린 뒤였다). 그리고 `accuracy_l2` 는 property 라 asdict 가
-    빠뜨려, 지표 파일에 지표가 없었다. 둘 다 `to_dict()` 로 막는다 (D-026).
+    빠뜨려, 지표 파일에 지표가 없었다. 둘 다 `to_dict()` 로 막는다.
     """
     result, metrics = run_hybrid_baseline(_top3_model(), llm_target_limit=2)
     payload = json.dumps(

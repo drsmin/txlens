@@ -29,7 +29,7 @@ from txlens.schemas import CardType, RawTx, TxType
 
 
 def _item(**kw) -> dict:
-    """CD03 `approved_list` 항목 하나. **규격의 기본형**을 쓴다 (D-023).
+    """CD03 `approved_list` 항목 하나. **규격의 기본형**을 쓴다.
 
     `total_install_cnt` 를 넣지 않는 것이 의도다 — 규격이 "일시불일 경우 미회신"이라고
     못박았으므로 일시불 항목에는 그 키가 아예 없다. `"0"` 을 기본값으로 두면 규격에 없는
@@ -92,7 +92,7 @@ def test_취소는_금액을_음수로_뒤집는다():
 
 
 def test_할부는_회차_회신_여부로만_판단한다():
-    """규격이 "일시불일 경우 미회신"이므로 **키의 유무**가 신호다 (D-023).
+    """규격이 "일시불일 경우 미회신"이므로 **키의 유무**가 신호다.
 
     이전 판본은 `pay_type` 을 일시불/할부로 오해해 "pay_type 이 02 가 아니면 회차를 무시"
     했다. 규격상 02 는 **체크카드**라, 그 규칙은 "체크카드가 아니면 할부를 무시한다"가 된다.
@@ -110,7 +110,7 @@ def test_할부는_회차_회신_여부로만_판단한다():
 
 
 def test_pay_type_은_신용_체크_구분이다():
-    """규격 코드셋 `card_pay_type` = {01 신용, 02 체크} (D-023)."""
+    """규격 코드셋 `card_pay_type` = {01 신용, 02 체크}."""
     credit = to_raw_tx(_item(pay_type="01"), provider_id="CARD_A", customer_id="SYNTH_0000")
     check = to_raw_tx(_item(pay_type="02"), provider_id="CARD_A", customer_id="SYNTH_0000")
     assert credit.card_type is CardType.CREDIT
@@ -123,9 +123,9 @@ def test_pay_type_은_신용_체크_구분이다():
         to_raw_tx(_item(pay_type="09"), provider_id="CARD_A", customer_id="SYNTH_0000")
 
 
-# ── status 4종 (규격 코드셋 card_approval_status) ────────────────────────────
+# ── status 4종 (규격 코드셋 card_approval_status) ───────────────────────────
 def test_정정은_modified_amt_가_실지출이다():
-    """`status=03` 의 `approved_amt` 는 정정 **전** 금액이다. 믿으면 지출이 틀어진다 (D-023)."""
+    """`status=03` 의 `approved_amt` 는 정정 **전** 금액이다. 믿으면 지출이 틀어진다."""
     tx = to_raw_tx(
         _item(status="03", approved_amt="12000", modified_amt="8000"),
         provider_id="CARD_A",
@@ -164,7 +164,7 @@ def test_취소_정정은_trans_dtime_을_사건_시각으로_쓴다():
 
 # ── 조건부 미회신 ───────────────────────────────────────────────────────────
 def test_없는_필드와_빈_문자열을_같게_다룬다():
-    """빈 문자열을 값으로 받으면 "regno 가 있다"고 착각해 REGNO 단계가 헛돈다 (D-012)."""
+    """빈 문자열을 값으로 받으면 "regno 가 있다"고 착각해 REGNO 단계가 헛돈다."""
     absent = to_raw_tx(_item(), provider_id="CARD_A", customer_id="SYNTH_0000")
     blank = to_raw_tx(
         _item(merchant_regno="  "),
@@ -225,7 +225,7 @@ def test_approved_list_가_없으면_실패한다():
 
 
 def test_next_page_가_있으면_조용히_잘라내지_않는다():
-    """규격은 마지막 페이지면 `next_page` 를 미회신한다 (D-023).
+    """규격은 마지막 페이지면 `next_page` 를 미회신한다.
 
     있는데 무시하면 거래의 **일부만** 보고 미분류율·이상탐지를 계산한다 — 조용히 틀리는 경로라
     막는다. 페이지네이션 자체는 실연동 때 호출 측이 구현할 몫이다.

@@ -1,7 +1,7 @@
 """가맹점 카탈로그 — 합성 데이터의 씨앗.
 
 각 브랜드는 **정답 라벨을 이미 알고 있다**(`l1`/`l2`). 오염된 표기를 만들어도 정답이 따라오므로
-골드셋을 사실상 공짜로 얻는다(blueprint §4).
+골드셋을 사실상 공짜로 얻는다(설계 §4).
 
 ## `corporate` 필드에 대한 주의
 
@@ -36,7 +36,7 @@ class Brand:
     frequency: float = 1.0           # 일상 소비에서 뽑힐 상대 가중치 (tail 은 낮게)
     is_fictional: bool = False       # 가상 브랜드 여부
     late_night: bool = False         # 심야 결제가 자연스러운 업종
-    #: 택소노미에 이 업종의 자리가 없다 → **정답 라벨은 미분류다** (D-026).
+    #: 택소노미에 이 업종의 자리가 없다 → **정답 라벨은 미분류다**.
     #: `l1`/`l2` 를 미분류로 바꾸지 않는 이유: 그 값은 생성기의 **행동 모델**(시각 분포·주말 가중)
     #: 에도 쓰이므로, 바꾸면 데이터셋 전체가 재배치돼 라벨 정정의 효과를 귀속할 수 없게 된다.
     #: 즉 `l1`/`l2` = "어떤 업종처럼 행동하는가", `gold_l1`/`gold_l2` = "정답이 무엇인가".
@@ -100,7 +100,7 @@ _HEAD: list[Brand] = [
           corporate=_c("교보문고"), romanized="KYOBO", frequency=1.5),
 ]
 
-# ── tail 브랜드 (frequency 낮음 — 롱테일의 꼬리) ─────────────────────────────
+# ── tail 브랜드 (frequency 낮음 — 롱테일의 꼬리) ────────────────────────────
 _TAIL: list[Brand] = [
     Brand("동네약국", CategoryL1.HEALTH, CategoryL2.HEALTH_PHARMACY, 3000, 28000,
           corporate=_c("동네약국"), frequency=1.2),
@@ -114,7 +114,7 @@ _TAIL: list[Brand] = [
           corporate=_c("낙원떡집"), frequency=0.5),
     Brand("한빛주차장", CategoryL1.TRANSPORT, CategoryL2.TRANSPORT_PARKING, 2000, 18000,
           corporate=_c("한빛주차장"), frequency=1.0),
-    # 세탁업은 택소노미에 자리가 없다 → **정답은 미분류다** (D-026). `l1`/`l2` 는 그대로 두고
+    # 세탁업은 택소노미에 자리가 없다 → **정답은 미분류다**. `l1`/`l2` 는 그대로 두고
     # `no_taxonomy_home` 만 켠다: 업종 성향(주말 가중·시간대)은 생활 서비스답게 유지해야 하고,
     # 라벨을 직접 바꾸면 `_day_weight`·`_pick_hour` 가 달라져 데이터셋 전체가 재배치된다.
     Brand("우리동네세탁", CategoryL1.SHOPPING, CategoryL2.SHOPPING_LIVING, 6000, 30000,
@@ -123,7 +123,7 @@ _TAIL: list[Brand] = [
           corporate=_c("영어의달인"), frequency=0.4),
 ]
 
-# ── 가상 브랜드: 법인명이 브랜드와 완전히 다른 최고난도 케이스 ───────────────
+# ── 가상 브랜드: 법인명이 브랜드와 완전히 다른 최고난도 케이스 ──────────────
 # 가상이므로 실제 법인명을 잘못 주장할 위험이 없다. 사람도 표기만 보고는 모른다.
 _FICTIONAL: list[Brand] = [
     Brand("빈스로드", CategoryL1.CAFE, CategoryL2.CAFE_COFFEE, 4500, 11000,

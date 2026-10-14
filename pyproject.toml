@@ -1,4 +1,4 @@
-# 패키지 매니저는 pip + venv (D-009). 의존성은 requirements.txt 에 두고,
+# 패키지 매니저는 pip + venv. 의존성은 requirements.txt 에 두고,
 # 이 파일은 패키지 메타데이터와 도구 설정만 담는다 — src/ 레이아웃을 쓰므로
 # `pip install -e .` 로 txlens 를 import 가능하게 만드는 것이 주 목적이다.
 
@@ -34,6 +34,6 @@ line-length = 100
 src = ["src", "tests", "app"]
 
 [tool.ruff.lint.per-file-ignores]
-# 테스트 픽스처의 거래일시는 tz 없는 KST 로 둔다 (D-009 — 표준API 가 오프셋 없이 주고
+# 테스트 픽스처의 거래일시는 tz 없는 KST 로 둔다 (표준API 가 오프셋 없이 주고
 # 데이터가 한국 단일 시간대다). 규칙을 전역으로 끄지 않고 여기서만 좁게 허용한다.
 "tests/*" = ["DTZ001"]

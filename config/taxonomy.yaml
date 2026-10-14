@@ -96,5 +96,5 @@ l1:
       - { id: unclassified.pg_masked,    label: PG경유_실가맹점불명 }
       - { id: unclassified.insufficient, label: 정보부족 }
 
-# 구독·이상지출은 카테고리가 아니라 **별도 축**이다 (blueprint §3.3 ⑥).
+# 구독·이상지출은 카테고리가 아니라 **별도 축**이다 (설계 §3.3 ⑥).
 # 같은 거래가 "culture.content + 구독" 일 수 있으므로 여기에 넣지 않는다.

@@ -1,4 +1,4 @@
-"""`llm_classify` 의 속 — `create_agent` + `ToolStrategy(LLMVerdict)` (blueprint §3.0 · D-017).
+"""`llm_classify` 의 속 — `create_agent` + `ToolStrategy(LLMVerdict)` (설계 §3.0).
 
 ## 여기가 이 프로젝트에서 유일하게 LLM 을 쓰는 자리다
 
@@ -13,7 +13,7 @@
 승격 후 재실행에서 그대로 히트한다. ③ 실패한 표기를 이름으로 지목할 수 있다 — 배치는 "어딘가
 틀렸다"만 알려준다.
 
-`Send` 로 병렬 fan-out 하는 것은 지금 하지 않는다 (blueprint §3.3 ③ 은 그렇게 적혀 있다).
+`Send` 로 병렬 fan-out 하는 것은 지금 하지 않는다 (설계 §3.3 ③ 은 그렇게 적혀 있다).
 표기 순서를 고정해야 캐시 히트 수와 호출 수가 결정론이 되고, 그 수치가 곧 발표 지표다. 병렬은
 지연을 줄이지만 지금 재려는 것은 지연이 아니다 — 실제 키가 붙고 155개의 지연이 문제가 되면
 그때 바꾼다.
@@ -48,14 +48,14 @@ from txlens.taxonomy import Taxonomy, load_taxonomy
 def target_message(target: LLMTarget) -> HumanMessage:
     """Agent 에 보내는 유일한 입력. **표기 말고는 아무것도 넣지 않는다.**
 
-    금액·일시·고객 식별자를 넣지 않는 것이 이 프로젝트의 전송 경계다 (blueprint §1.1).
+    금액·일시·고객 식별자를 넣지 않는 것이 이 프로젝트의 전송 경계다 (설계 §1.1).
     `tx_count` 도 넣지 않는다 — 검토 우선순위용 값이고, 모델에게는 "이게 많이 쓰인 가맹점"이라는
     편향만 준다.
 
     한때 이 함수는 키만 보내고 전처리 결과는 `get_brand_hint` 로 **조회하게** 했다. 실측해 보니
     그 한 번의 왕복이 표기당 모델 호출을 4회로 만들었고(시스템 프롬프트 2,600토큰이 매 호출마다
     재전송된다), 돌려받는 것은 우리가 이미 계산해 둔 값이었다. 이미 아는 사실은 **묻지 말고 적어
-    준다** — 도구는 모르는 것을 찾을 때만 쓴다 (D-026).
+    준다** — 도구는 모르는 것을 찾을 때만 쓴다.
     """
     lines = [f"정규화 키: {target.normalized_name}"]
     if target.sample_raw_name and target.sample_raw_name != target.normalized_name:
@@ -119,7 +119,7 @@ def build_classifier(
     `dictionary` 를 인자로 받는 것이 베이스라인 비교의 전제다 — **(B) LLM만** 은 빈 사전을 주고,
     **(C) 하이브리드** 는 v1 을 준다. 도구가 모듈 전역의 사전을 읽으면 B 를 만들 수 없다.
 
-    `emulate_tools`: 도구 실행을 LLM 으로 대신하게 한다(`LLMToolEmulator` — D-017). 우리 도구
+    `emulate_tools`: 도구 실행을 LLM 으로 대신하게 한다(`LLMToolEmulator`). 우리 도구
     3종은 순수 로컬 함수라 테스트에 에뮬레이터가 필요하지 않다. 실연동에서 사전 조회가 외부
     서비스로 바뀌는 순간 그 호출을 끊고 그래프 경로만 검증하기 위한 자리로 남겨 둔다.
     `emulator_model` 을 따로 받는 이유: 에뮬레이터는 **분류와 다른 질문**("이 도구라면 무엇을

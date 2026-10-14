@@ -1,30 +1,30 @@
 # TxLens 직접 의존성. 재현용 고정 버전은 requirements.lock.txt (pip freeze 결과).
 # 설치: pip install -r requirements.txt && pip install -e .
-# 복구 절차는 docs/recovery.md.
+# 복구 절차는 README.md.
 
-# ── Week 0~1: 스키마 · 택소노미 · 결정론 파이프라인 ──
+# ── Week 0~1: 스키마 · 택소노미 · 결정론 파이프라인 ─────────────────────────
 pydantic>=2.7
 PyYAML>=6.0
-rapidfuzz>=3.9            # 가맹점명 유사도 매칭 (token_sort_ratio — D-024①)
+rapidfuzz>=3.9            # 가맹점명 유사도 매칭 (token_sort_ratio)
 python-dotenv>=1.0        # .env 에서 OPENAI_API_KEY 로드
 
-# ── Week 1~: 평가 하네스 ──
+# ── Week 1~: 평가 하네스 ────────────────────────────────────────────────────
 pandas>=2.2               # 지표 표 · 베이스라인 비교
 
-# ── Week 2: LangGraph + LLM ──
-# langchain 1.x 가 있어야 `create_agent`·미들웨어·`ToolStrategy` 를 쓴다 (D-017).
+# ── Week 2: LangGraph + LLM ─────────────────────────────────────────────────
+# langchain 1.x 가 있어야 `create_agent`·미들웨어·`ToolStrategy` 를 쓴다.
 # langchain-core 만으로는 `langchain.agents` 가 없어 분류 Agent 를 조립할 수 없다.
 langchain>=1.0,<2
 langgraph>=0.2
 langchain-core>=0.3
 langchain-openai>=0.2
 
-# ── Week 3: HITL checkpointer + 화면 ──
+# ── Week 3: HITL checkpointer + 화면 ────────────────────────────────────────
 langgraph-checkpoint-sqlite>=2.0
 streamlit>=1.37           # st.data_editor + column_config 필요 (1.23+)
 
-# ── Week 5: MCP (로컬 stdio 서버 + 클라이언트) ──
-# 서버는 `python -m txlens.mcp_server`, 붙는 설정은 저장소 루트 `.mcp.json` (D-052).
+# ── Week 5: MCP (로컬 stdio 서버 + 클라이언트) ──────────────────────────────
+# 서버는 `python -m txlens.mcp_server`, 붙는 설정은 저장소 루트 `.mcp.json`.
 # 어댑터는 같은 서버에 **우리 코드로도** 붙어 in-process 도구와 답이 같은지 확인하는 데 쓴다.
 # ⚠️ langchain-mcp-adapters 가 mcp 를 1.x 로 묶는다 (2.x 를 따로 올리면 설치가 깨진다).
 mcp>=1.30,<2

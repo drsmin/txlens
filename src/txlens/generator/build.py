@@ -4,7 +4,7 @@ Layer 1(표준API 봉투)은 `emit.py` 가 담당한다. 여기서는 **의미**
 현실적인 금액·시각 분포, 구독 주기, 탐지 대상 패턴, 오탐 함정, 그리고 정답 기록.
 
 핵심 원칙 — **심으면서 정답을 적는다.** 사후 라벨링이 아니므로 정답이 정의상 옳고,
-심지 않은 패턴은 평가 대상이 아니다(blueprint §3.6).
+심지 않은 패턴은 평가 대상이 아니다(설계 §3.6).
 """
 
 from __future__ import annotations
@@ -133,7 +133,7 @@ def _daily(rng: random.Random, cid: str, days: list[datetime], acc: _Acc, per_mo
         )
 
 
-# ── ② 구독 (2부 정답) ──────────────────────────────────────────────────────
+# ── ② 구독 (2부 정답) ───────────────────────────────────────────────────────
 def _subscriptions(rng: random.Random, cid: str, start: datetime, months: int, acc: _Acc) -> None:
     pool = list(SUBSCRIPTION_BRANDS)
     rng.shuffle(pool)
@@ -179,7 +179,7 @@ def _subscriptions(rng: random.Random, cid: str, start: datetime, months: int, a
             ))
 
 
-# ── ③ 이상지출 (2부 정답) ──────────────────────────────────────────────────
+# ── ③ 이상지출 (2부 정답) ───────────────────────────────────────────────────
 def _spending_anomalies(
     rng: random.Random, cid: str, days: list[datetime], acc: _Acc
 ) -> None:
@@ -205,7 +205,7 @@ def _spending_anomalies(
     ))
 
 
-# ── ④ 이상거래패턴 (2부 정답) ──────────────────────────────────────────────
+# ── ④ 이상거래패턴 (2부 정답) ───────────────────────────────────────────────
 def _tx_anomalies(rng: random.Random, cid: str, days: list[datetime], acc: _Acc) -> None:
     # 중복결제: 동일 가맹점·동일 금액·10분 이내, 취소 페어 없음
     if rng.random() < 0.7:
@@ -274,7 +274,7 @@ def build(
     `period_end` 를 인자로 받는 이유: 실행 시각에 의존하면 같은 시드라도 데이터가 달라진다.
     """
     pset = providers or load_providers()
-    # 기본 종료일 상수. tz 없는 KST 로 통일한다 (D-009) — 표준API 가 오프셋 없이 주고
+    # 기본 종료일 상수. tz 없는 KST 로 통일한다 — 표준API 가 오프셋 없이 주고
     # 데이터가 한국 단일 시간대다. `now()` 를 쓰지 않는 이유는 §docstring 참고.
     default_end = datetime(2026, 8, 31)  # noqa: DTZ001
     end = (period_end or default_end).replace(hour=0, minute=0, second=0, microsecond=0)
@@ -284,7 +284,7 @@ def build(
     acc = _Acc()
     # 고객별 보유 카드 세트. 한 사람이 모든 기관을 쓰지는 않는다 — 기관 배정을 이 안에서만 한다.
     cards: dict[str, list[str]] = {}
-    #: (고객, 기관) → 신용/체크. **카드의 속성이므로 거래마다 달라지지 않는다** (D-023).
+    #: (고객, 기관) → 신용/체크. **카드의 속성이므로 거래마다 달라지지 않는다**.
     #: 규격의 `pay_type` 이 이 값이다 — 할부 여부가 아니다.
     card_types: dict[tuple[str, str], CardType] = {}
     for i in range(customers):
@@ -367,7 +367,7 @@ def build(
                 provider_id=profile.id, pg_masked=True, style=cn.style,
             )
         else:
-            # `gold_*` 를 쓴다 — 택소노미에 자리가 없는 업종은 **미분류가 정답**이다 (D-026).
+            # `gold_*` 를 쓴다 — 택소노미에 자리가 없는 업종은 **미분류가 정답**이다.
             # `l1`/`l2` 는 행동 모델용 값이라 정답으로 쓰면 억지 라벨이 정답이 된다.
             label = TxLabel(
                 canonical=dr.brand.brand, category_l1=dr.brand.gold_l1,
@@ -378,7 +378,7 @@ def build(
 
         # 취소 페어 — 동일 승인번호, 부호 반대.
         # ⚠️ 규격은 취소를 *부호 없는 금액 + status=02 + `trans_dtime`* 으로 표현한다. 여기서는
-        # 음수 금액 별행으로 두고 `trans_dtime` 을 내지 않는다 — 의도된 단순화이며 D-023 에
+        # 음수 금액 별행으로 두고 `trans_dtime` 을 내지 않는다 — 의도된 단순화이며 설계에
         # 기록했다. `ingest` 는 실데이터의 `trans_dtime` 을 읽을 수 있다.
         if dr.cancelled:
             txs.append(RawTx(

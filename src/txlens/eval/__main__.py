@@ -4,7 +4,7 @@
     python -m txlens.eval --baseline c --model openai:gpt-4o-mini
     python -m txlens.eval --baseline all --model openai:gpt-4o-mini --llm-limit 30
 
-데이터가 없으면 `python -m txlens.generator --seed 42` 를 먼저 실행한다 (docs/recovery.md).
+데이터가 없으면 `python -m txlens.generator --seed 42` 를 먼저 실행한다 (README 참고).
 B·C 는 실제 모델을 호출하므로 `.env` 의 `OPENAI_API_KEY` 가 필요하다. 키가 없으면 **조용히 A 로
 떨어지지 않고** 무엇이 없어서 못 돌리는지 말하고 멈춘다.
 """
@@ -28,7 +28,7 @@ from txlens.eval.harness import (
     run_rules_baseline,
 )
 
-#: 모델 문자열의 기본값. 지정하지 않으면 이 모델로 B·C 를 돌린다 (blueprint §3.3 ③).
+#: 모델 문자열의 기본값. 지정하지 않으면 이 모델로 B·C 를 돌린다 (설계 §3.3 ③).
 DEFAULT_MODEL = "openai:gpt-4o-mini"
 
 
@@ -55,7 +55,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     ap.add_argument(
         "--json", type=Path, default=None,
-        help="지표를 JSON 으로도 쓴다. (B) 스냅샷만은 커밋한다 — 화면이 되살릴 수 없다 (D-041②)",
+        help="지표를 JSON 으로도 쓴다. (B) 스냅샷만은 커밋한다 — 화면이 되살릴 수 없다",
     )
     args = ap.parse_args(argv)
 
@@ -64,7 +64,7 @@ def main(argv: list[str] | None = None) -> int:
     if needs_model and not os.getenv("OPENAI_API_KEY"):
         ap.error(
             "OPENAI_API_KEY 가 없어 베이스라인 B·C 를 돌릴 수 없다. "
-            ".env 에 키를 넣어라 (docs/recovery.md). --baseline a 는 키 없이 돈다"
+            ".env 에 키를 넣어라 (README 참고). --baseline a 는 키 없이 돈다"
         )
     model = args.model or DEFAULT_MODEL
 

@@ -1,4 +1,4 @@
-"""분류 Agent 의 도구 3종 (blueprint §3.0).
+"""분류 Agent 의 도구 3종 (설계 §3.0).
 
 ## 공통 원칙 — 사전을 프롬프트에 붓지 않는다
 
@@ -15,7 +15,7 @@
 
 `lookup_alias` 는 룰 매칭이 **이미 실패한** 이름에만 불린다. 그래서 돌려주는 후보는 전부 유사도
 임계값 미달이고, "가장 비슷한 것"이 정답이라는 보장이 없다 — 도구 설명에 그 사실을 적어 둔다.
-여기서 후보를 정답처럼 제시하면 D-024① 에서 잡은 `STEP GYM` → `STEP GYM MEMBERSHIP` 흡수를
+여기서 후보를 정답처럼 제시하면 앞서 잡은 `STEP GYM` → `STEP GYM MEMBERSHIP` 흡수를
 프롬프트 층에서 다시 만들어내는 셈이다.
 """
 
@@ -34,7 +34,7 @@ from txlens.taxonomy import Taxonomy
 ALIAS_LOOKUP_FLOOR = 55
 ALIAS_LOOKUP_LIMIT = 5
 
-#: 배달앱 채널이 주는 카테고리 힌트. 채널이 곧 업종인 유일한 경우다 (blueprint §3.3 ①).
+#: 배달앱 채널이 주는 카테고리 힌트. 채널이 곧 업종인 유일한 경우다 (설계 §3.3 ①).
 DELIVERY_CHANNELS: frozenset[PaymentChannel] = frozenset({
     PaymentChannel.BAEMIN,
     PaymentChannel.COUPANG_EATS,
@@ -111,7 +111,7 @@ def make_tools(*, dictionary: RuleDictionary, taxonomy: Taxonomy) -> list[BaseTo
         if not hits:
             # ⚠️ 여기서 "없으면 미분류로 답하라"고 쓰면 안 된다. 이 검색은 **라벨 문자열의 부분
             # 일치**일 뿐이라 동의어를 못 잡는다 — 실제로 `호프`(주류)를 못 찾은 모델이 도구의
-            # 침묵을 "카테고리가 없다"는 증거로 받아들여 잡을 수 있는 것을 미분류로 버렸다 (D-026).
+            # 침묵을 "카테고리가 없다"는 증거로 받아들여 잡을 수 있는 것을 미분류로 버렸다.
             return (
                 f"'{keyword}' 가 라벨에 그대로 들어 있는 카테고리는 없다. **이것은 카테고리가 "
                 "없다는 뜻이 아니다** — 이 검색은 글자 일치만 본다. 시스템 프롬프트의 카테고리 "

@@ -76,7 +76,7 @@ def main(argv: list[str] | None = None) -> int:
     if not args.bundles.exists():
         ap.error(
             f"번들이 없다: {args.bundles} — `python -m txlens.generator --seed 42` 를 먼저 "
-            "실행한다 (docs/recovery.md)"
+            "실행한다 (README 참고)"
         )
 
     payload: dict[str, object]

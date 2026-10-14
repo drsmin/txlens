@@ -3,7 +3,7 @@
 여기서 막고 싶은 것은 셋이다.
 
 ① **도구가 두 개가 되는 것.** MCP 서버가 도구를 다시 구현하면 에이전트가 쓰는 `lookup_alias` 와
-   Claude 가 쓰는 `lookup_alias` 가 갈라진다. 설명 문자열까지 같은 출처에서 오는지 기계로 본다.
+   MCP 클라이언트가 쓰는 `lookup_alias` 가 갈라진다. 설명 문자열까지 같은 출처에서 오는지 기계로 본다.
 ② **사전 주입이 서버에서 풀리는 것.** 사전을 인자로 받는 구조(B/C 베이스라인의 전제)가
    MCP 경계를 넘어서도 살아 있어야 v1 서버와 v2 서버를 나란히 띄울 수 있다.
 ③ **`.mcp.json` 이 낡는 것.** 설정이 가리키는 명령이 실제로 돌지 않으면 발표 당일에 안 붙는다.
@@ -120,7 +120,7 @@ def test_classify_merchant_는_룰_매칭_결과를_그대로_보여준다(serve
 
 
 def test_PG_경유는_미분류가_정답이라고_말해준다(server):
-    """D-012 — 사람이 "왜 미분류냐"고 물을 때 이 서버가 이유를 준다."""
+    """사람이 "왜 미분류냐"고 물을 때 이 서버가 이유를 준다."""
     text = _call(server, "classify_merchant", {"name": "(주)케이지이니시스"})
     assert "PG" in text and "미분류" in text
 
@@ -148,7 +148,7 @@ def test_리소스로_택소노미와_사전을_읽는다(server):
 
 
 def test_mcp_json_이_가리키는_명령이_실제로_돈다():
-    """③ 설정이 낡으면 발표 당일 Claude Code 가 서버에 못 붙는다. 여기서 먼저 깨지게 둔다."""
+    """③ 설정이 낡으면 발표 당일 클라이언트가 서버에 못 붙는다. 여기서 먼저 깨지게 둔다."""
     config = json.loads((REPO_ROOT / ".mcp.json").read_text(encoding="utf-8"))
     entry = config["mcpServers"][SERVER_NAME]
 
@@ -169,7 +169,7 @@ def test_mcp_json_이_가리키는_명령이_실제로_돈다():
     assert "도구 5개" in proc.stdout
 
 
-# ── MCP 경유 도구가 in-process 도구와 같은 답을 내는가 ────────────────────────
+# ── MCP 경유 도구가 in-process 도구와 같은 답을 내는가 ──────────────────────
 # 여기부터는 **진짜 서브프로세스**를 띄운다 (stdio). 위의 in-memory 세션이 못 잡는 것 —
 # 모듈 import 실패·인자 오류·프레임 깨짐 — 이 여기서 잡힌다. 느린 대신 이것만이 `.mcp.json`
 # 이 실제로 붙는다는 증거다.

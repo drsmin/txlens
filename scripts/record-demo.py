@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""데모 영상을 뜬다 — Streamlit 화면을 브라우저로 조작하며 녹화한다 (D-053 · D-059 · D-060).
+"""데모 영상을 뜬다 — Streamlit 화면을 브라우저로 조작하며 녹화한다.
 
-왜 사람이 화면 녹화기로 뜨지 않는가: 녹화는 **다시 뜰 수 있어야** 라이브보다 안전하다(D-053).
+왜 사람이 화면 녹화기로 뜨지 않는가: 녹화는 **다시 뜰 수 있어야** 라이브보다 안전하다.
 손으로 뜨면 클릭 순서·대기 시간이 매번 달라 수치를 고친 뒤 같은 영상을 다시 만들 수 없다.
 이 스크립트는 같은 장면을 같은 순서로 다시 뜬다. 화면은 재생 대본으로 돌므로 **API 는 0** 이다.
 
-**사람이 조작한 것처럼 보이게 한다** (D-060). 첫 판은 커서가 없고 클릭이 순간이동하며 대기가
+**사람이 조작한 것처럼 보이게 한다**. 첫 판은 커서가 없고 클릭이 순간이동하며 대기가
 매번 같아 기계가 만든 영상으로 읽혔다. 그래서 ① 커서를 그리고 곡선·가감속으로 옮긴다
 ② 타이핑·대기에 변동을 준다(시드 고정 — 다시 떠도 같은 영상) ③ 스크롤은 휠로 ④ 자막은
 왼쪽 아래 한 줄 ⑤ 강조 테두리 대신 커서가 로그를 짚는다. 소리는 넣지 않는다 — "실제로 이렇게
@@ -14,13 +14,13 @@
 장면 (약 2분 반):
     Home → S1 검토 큐(interrupt 에서 멈춤 → 교정 3줄 → 재개 → 승격 → 라운드 2)
          → S4 인사이트(§5.2 네 단계 토글) → S2 지표 대시보드
-오른쪽 칸의 실행 로그(D-054)가 그래프가 실제로 도는 증거다. 로그 타임스탬프는 그래프의 실제
+오른쪽 칸의 실행 로그가 그래프가 실제로 도는 증거다. 로그 타임스탬프는 그래프의 실제
 시간이고, 읽을 시간은 그래프 밖(장면 사이 대기)에서만 준다 — 그래프에 지연을 넣으면 `[0.31s]`
-가 성능을 거짓말한다 (D-053).
+가 성능을 거짓말한다.
 
 사용:
     streamlit run app/Home.py --server.port 8501 --server.headless true   # 먼저 띄운다
-    python scripts/record-demo.py                     # → docs/reports/media/txlens-demo.mp4
+    python scripts/record-demo.py                     # → deliverables/txlens-demo.mp4
     python scripts/record-demo.py --out /tmp/x.mp4 --browser /path/to/chrome
 
 필요한 것: `playwright`(requirements-dev) · mp4 변환용 `imageio-ffmpeg`(없으면 webm 만 남긴다).
@@ -48,16 +48,16 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUT = ROOT / "docs" / "reports" / "media" / "txlens-demo.mp4"
 W, H = 1920, 1080
 
-# 덱에 들어갈 스틸 (D-053 — PDF 는 영상을 실어 나르지 못하므로 그 자리에 한 장을 둔다).
+# 덱에 들어갈 스틸 (PDF 는 영상을 실어 나르지 못하므로 그 자리에 한 장을 둔다).
 # 32초 지점: S1 검토 큐 · 오른쪽에 8노드 실행 로그 · 커서가 분류 칸에 있고 자막이 교정 3줄을
-# 말한다 — D-059 의 계기("랭그래프가 작동하는 로그")가 한 장에 다 들어가는 유일한 프레임이다.
+# 말한다 — 그 계기("랭그래프가 작동하는 로그")가 한 장에 다 들어가는 유일한 프레임이다.
 # 손으로 캡처하지 않는다: 영상을 입력으로 삼으므로 영상을 다시 뜨지 않으면 같은 그림이 나온다.
 STILL_AT = 32.0
 DEFAULT_STILL = ROOT / "assets" / "diagrams" / "demo-still-s1.png"
 SEED = 7  # 변동은 주되 다시 떠도 같은 영상이 나오게
 
 # S1 에서 고칠 세 줄 — 큐 상위 3개(덮는 거래 65+30+27 = 122건). 정답은 생성기의 브랜드 표다.
-#   우리동네세탁: 세탁업은 택소노미에 자리가 없어 정답이 **미분류**다(D-026) — LLM 답을 그대로 승인
+#   우리동네세탁: 세탁업은 택소노미에 자리가 없어 정답이 **미분류**다 — LLM 답을 그대로 승인
 #   제이디에프컴퍼니·디엠리테일홀딩스: 법인명과 브랜드가 전혀 다른 가상 브랜드 — 사람만 안다
 CORRECTIONS = [
     (0, None, None),
@@ -247,7 +247,7 @@ class Director:
         self.settle()
 
     def collapse_sidebar(self) -> None:
-        # 사이드바를 접어야 로그 칸이 70자 줄을 자르지 않는다 (D-054 의 6:4 가 1920px 에서 성립)
+        # 사이드바를 접어야 로그 칸이 70자 줄을 자르지 않는다 (로그 칸의 6:4 가 1920px 에서 성립)
         # 접힌 상태는 페이지를 옮겨도 남는다 — 펼쳐져 있을 때만 누른다
         if self.page.locator('[data-testid="stSidebar"][aria-expanded="true"]').count() == 0:
             return
@@ -439,7 +439,7 @@ def encode(webm: Path, out: Path, *, skip: float) -> Path:
     cmd = [
         imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-loglevel", "error",
         "-ss", f"{skip:.2f}", "-i", str(webm),
-        # 발표 기기 호환이 최우선이다 — H.264 + yuv420p 는 어떤 플레이어도 연다 (D-053 재생 위험)
+        # 발표 기기 호환이 최우선이다 — H.264 + yuv420p 는 어떤 플레이어도 연다 (재생 위험)
         "-c:v", "libx264", "-preset", "slow", "-crf", "20", "-pix_fmt", "yuv420p",
         "-r", "30", "-movflags", "+faststart", "-an", str(out),
     ]
@@ -469,7 +469,7 @@ def still(video: Path, out: Path, *, at: float = STILL_AT) -> Path:
 
 
 def playback_check(video: Path) -> bool:
-    """발표 기기에서 열리는 조건을 확인한다 (D-053 — 남은 위험이 재생 환경 하나다).
+    """발표 기기에서 열리는 조건을 확인한다 (남은 위험이 재생 환경 하나다).
 
     h264 + yuv420p 면 어떤 플레이어도 열고, 오디오 스트림이 없어야 소리를 안 찾는다.
     """
@@ -506,7 +506,7 @@ def main() -> int:
     if args.still_only:
         png = still(args.out, args.still)
         print(f"  → {png.relative_to(ROOT)}  {png.stat().st_size / 1e6:.1f} MB  (t={STILL_AT:.0f}s)")
-        print("재생 조건 (D-053):")
+        print("재생 조건:")
         return 0 if playback_check(args.out) else 1
 
     out = record(args.base, args.out, args.browser)
@@ -515,7 +515,7 @@ def main() -> int:
     if out.suffix == ".mp4":
         png = still(out, args.still)
         print(f"  → {png.relative_to(ROOT)}  (스틸 t={STILL_AT:.0f}s · 덱이 이 파일을 참조한다)")
-        print("재생 조건 (D-053):")
+        print("재생 조건:")
         playback_check(out)
     return 0
 

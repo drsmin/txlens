@@ -113,7 +113,7 @@ class _CategoryConsistency(BaseModel):
 
 # ── 열거형 ──────────────────────────────────────────────────────────────────
 class TxType(str, Enum):
-    """`status`(결제상태) 4종에 대응한다 — 카드-008 `card_approval_status` (D-023).
+    """`status`(결제상태) 4종에 대응한다 — 카드-008 `card_approval_status`.
 
     규격 코드: 01 승인 · 02 승인취소 · 03 정정 · 04 무승인매입. 앞의 둘만 다루면 실데이터에서
     나머지 둘을 만나 죽는다. `CORRECTION` 은 원거래를 대체하고(`modified_amt` 가 실지출),
@@ -127,7 +127,7 @@ class TxType(str, Enum):
 
 
 class CardType(str, Enum):
-    """`pay_type` = **신용/체크** 구분이다 (카드-008 `card_pay_type` — D-023).
+    """`pay_type` = **신용/체크** 구분이다 (카드-008 `card_pay_type`).
 
     ⚠️ 할부 여부가 아니다. 할부는 `total_install_cnt` 의 **회신 여부**로만 판단한다.
     """
@@ -137,7 +137,7 @@ class CardType(str, Enum):
 
 
 class PaymentChannel(str, Enum):
-    """가맹점명 앞에 붙는 결제 채널. 버리지 않고 분리해 보존한다 (blueprint §3.3 ①)."""
+    """가맹점명 앞에 붙는 결제 채널. 버리지 않고 분리해 보존한다 (설계 §3.3 ①)."""
 
     NAVERPAY = "naverpay"
     KAKAOPAY = "kakaopay"
@@ -160,7 +160,7 @@ class MatchStage(str, Enum):
     #: 개선 여지가 있는 것처럼 보인다 (실제로는 사전을 아무리 키워도 줄지 않는다).
     PG_MASKED = "pg_masked"
     EXACT = "exact"
-    #: 사업자등록번호 일치. 신뢰도가 제공기관에 달려 있어 보조 신호다 (D-012).
+    #: 사업자등록번호 일치. 신뢰도가 제공기관에 달려 있어 보조 신호다.
     REGNO = "regno"
     ALIAS = "alias"
     REGEX = "regex"
@@ -183,45 +183,45 @@ class Evidence(str, Enum):
 class RawTx(BaseModel):
     """정보제공자에게서 받은 원본 거래. 표준API 거래내역 응답 형태를 모사한다.
 
-    **합성 데이터 전용이다** (D-005). 실제 고객 데이터는 어떤 경로로도 여기 들어오지 않는다.
+    **합성 데이터 전용이다**. 실제 고객 데이터는 어떤 경로로도 여기 들어오지 않는다.
     """
 
     model_config = ConfigDict(frozen=True)
 
     provider_id: str = Field(
         description="정보제공자 식별자 (카드사 등). 표기 관행이 기관마다 크게 다르므로 "
-        "지표를 이 축으로 쪼개 본다 — D-012"
+        "지표를 이 축으로 쪼개 본다"
     )
     customer_id: str = Field(description="합성 고객 식별자 — 실제 식별정보가 아니다")
     approval_no: str = Field(description="승인번호. 취소 거래 페어링 키")
     #: **tz 없는 KST 로컬 시각.** 표준API 는 거래일시를 오프셋 없이 주고, 이 프로젝트의 데이터는
     #: 전부 한국 단일 시간대다(한국은 DST 도 없다). tz-aware 로 올리면 구독 주기 계산 등 모든
-    #: 날짜 연산에 잡음만 늘고 얻는 게 없어 naive 로 통일한다 — D-009.
+    #: 날짜 연산에 잡음만 늘고 얻는 게 없어 naive 로 통일한다.
     tx_datetime: datetime
     merchant_name_raw: str = Field(description="정규화 전 가맹점명. 자유 텍스트")
     amount: int = Field(description="거래금액(원). 취소는 음수")
     currency: str = "KRW"
     tx_type: TxType = TxType.APPROVE
-    #: 전체 할부회차. 규격은 **일시불이면 이 필드를 미회신**하므로 0 = 일시불이다 (D-023).
+    #: 전체 할부회차. 규격은 **일시불이면 이 필드를 미회신**하므로 0 = 일시불이다.
     installment_months: int = Field(default=0, ge=0, description="0 = 일시불")
-    #: 신용/체크. 규격 필수 필드라 보존하지만 분류·탐지에는 쓰지 않는다 (D-023).
+    #: 신용/체크. 규격 필수 필드라 보존하지만 분류·탐지에는 쓰지 않는다.
     card_type: CardType | None = None
     #: 취소·정정 행의 **원거래 승인일시**(`approved_dtime`).
     #: 규격은 취소·정정 행에도 원 승인일시를 주고 사건 시각은 `trans_dtime` 으로 준다.
     #: 그래서 `tx_datetime` = 사건 시각(취소가 일어난 때)이고, 원 승인 시각은 여기 남긴다.
     original_datetime: datetime | None = None
-    #: 가맹점 사업자등록번호. **정규화의 주 키로 쓰지 않는다** (D-012).
+    #: 가맹점 사업자등록번호. **정규화의 주 키로 쓰지 않는다**.
     #: 채워지는 정도가 제공기관마다 크게 달라 신뢰할 수 없고, PG 경유 시엔 PG사 번호가 오며,
     #: 같은 브랜드가 점포별로 다른 번호를 갖는다 — 즉 "같은 점포"는 잡아도 "같은 브랜드"는 못 잡는다.
     #: 브랜드 단위 집계(카테고리·구독)에는 여전히 이름 정규화가 필요하다.
     #: 있고 사전에 등록된 경우에만 보조 신호로 쓴다(MatchStage.REGNO).
     #: **규격 형태(`aN(12)` — `123-45-67890`, 하이픈 포함)를 그대로 보존한다.** 매칭 키로 쓸 때는
-    #: `preprocess.regno_key()` 로 숫자만 남긴다 — 기관마다 하이픈 유무가 다르다 (D-023).
+    #: `preprocess.regno_key()` 로 숫자만 남긴다 — 기관마다 하이픈 유무가 다르다.
     merchant_regno: str | None = None
 
 
 class NormalizedTx(BaseModel):
-    """결정론적 전처리 결과. LLM 이전에 여기서 정확도의 절반이 결정된다 (blueprint §3.3 ①)."""
+    """결정론적 전처리 결과. LLM 이전에 여기서 정확도의 절반이 결정된다 (설계 §3.3 ①)."""
 
     raw: RawTx
     normalized_name: str = Field(description="NFKC·법인표기·지점·채널 제거 후의 매칭 키")
@@ -251,7 +251,7 @@ class CancelPairing(BaseModel):
     그 순서는 `ingest` 가 고정한다.
 
     노드를 쪼개면 그 사이를 지나는 값이 계약이 된다. 계약이 되는 순간 "프로세스 안에서만 맞는
-    키"는 못 쓴다 — 쪼개기 전에는 드러나지 않던 제약이다 (D-031).
+    키"는 못 쓴다 — 쪼개기 전에는 드러나지 않던 제약이다.
     """
 
     index: int = Field(ge=0, description="`raw` 리스트에서 이 표식이 가리키는 행의 위치")
@@ -262,7 +262,7 @@ class CancelPairing(BaseModel):
 class LLMTarget(BaseModel):
     """LLM 에 물어볼 대상 하나. **거래가 아니라 고유 표기가 단위다.**
 
-    표기 단위인 이유는 비용이 아니라 설계다 (blueprint §1.1) — 한 사람의 거래 목록을 보내면 소비
+    표기 단위인 이유는 비용이 아니라 설계다 (설계 §1.1) — 한 사람의 거래 목록을 보내면 소비
     패턴이 외부로 나간다. 표기 하나만 보내면 "이 문자열이 어느 브랜드인가"라는 질문이 되고, 누가
     언제 얼마를 썼는지는 경계 안에 남는다.
     """
@@ -280,10 +280,10 @@ class LLMTarget(BaseModel):
 
 
 class LLMVerdict(_CategoryConsistency):
-    """LLM 분류 결과. structured output 으로 강제되는 형태 (blueprint §3.3 ③).
+    """LLM 분류 결과. structured output 으로 강제되는 형태 (설계 §3.3 ③).
 
     거래 단위가 아니라 **고유 가맹점명(distinct) 단위**로 만들어진다 — 개인의 소비 패턴을
-    외부로 보내지 않기 위한 설계이며(blueprint §1.1), 캐시 키도 이 단위다.
+    외부로 보내지 않기 위한 설계이며(설계 §1.1), 캐시 키도 이 단위다.
     """
 
     merchant_canonical: str = Field(description="대표 가맹점명")
@@ -306,7 +306,7 @@ class ClassifiedTx(_CategoryConsistency):
 
 
 class RuleProposal(_CategoryConsistency):
-    """룰 사전 승격 후보. 이 프로젝트의 심장 (blueprint §3.3 ⑤).
+    """룰 사전 승격 후보. 이 프로젝트의 심장 (설계 §3.3 ⑤).
 
     사람이 교정한 결과와 고신뢰 LLM 결과가 여기로 모여 사전에 승격되고, 다음 라운드부터는
     같은 문자열이 exact/alias 단계에서 즉시 잡힌다 — LLM 호출이 라운드마다 줄어드는 이유다.
@@ -323,7 +323,7 @@ class RuleProposal(_CategoryConsistency):
 class ReviewItem(BaseModel):
     """HITL 검토 큐의 한 줄.
 
-    `priority` 로 정렬해 **사람의 1분이 가장 많은 거래를 고치게** 한다 (blueprint §3.3 ④).
+    `priority` 로 정렬해 **사람의 1분이 가장 많은 거래를 고치게** 한다 (설계 §3.3 ④).
     """
 
     normalized_name: str
@@ -338,7 +338,7 @@ class ReviewItem(BaseModel):
 class HumanCorrection(_CategoryConsistency):
     """사람이 검토 화면에서 확정한 한 줄 — **자동 승격이 못 하는 일을 하는 자리다.**
 
-    자동 승격은 대표명을 사전에서 찾을 수 있을 때만 별칭을 만든다(D-033). 그래서 사전에 없는
+    자동 승격은 대표명을 사전에서 찾을 수 있을 때만 별칭을 만든다. 그래서 사전에 없는
     브랜드는 몇 라운드를 돌려도 영원히 미매칭으로 남는다 — 실측에서 자동이 덮은 것이 40건이고
     남은 것이 276건이다. 그 276건을 여는 열쇠가 이 객체이고, 그래서 이것만이 `origin="human"`
     으로 **새 브랜드를 만들 수 있다** (`rules.promote.propose_from_corrections`).

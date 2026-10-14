@@ -220,7 +220,7 @@ def test_혼동표는_맞은_조합을_담지_않는다():
     assert result.confusions == []
 
 
-# ── ③ 정규화 키 기준 (롱테일) ────────────────────────────────────────────────
+# ── ③ 정규화 키 기준 (롱테일) ───────────────────────────────────────────────
 def test_정규화_키_기준은_건수_가중이_아니다():
     """상위 브랜드 1건이 표기 100개를 덮지 못하게 — 키마다 가중치가 같다."""
     classified = [_hit(f"A{i}", "스타벅스", stage=MatchStage.EXACT) for i in range(50)]
@@ -267,7 +267,7 @@ def test_제공기관_축_분해의_합이_전체와_같다():
 
 
 def test_미매칭_상위는_정답_대표명을_함께_준다():
-    """사전에 무엇을 넣어야 하는지가 바로 보여야 승격 루프가 돈다 (blueprint §3.3⑤)."""
+    """사전에 무엇을 넣어야 하는지가 바로 보여야 승격 루프가 돈다 (설계 §3.3⑤)."""
     result = evaluate(
         [_miss("A1", "제이디에프컴퍼니"), _miss("A2", "제이디에프컴퍼니"), _miss("A3", "낙원떡집")],
         _truth(
@@ -301,7 +301,7 @@ def test_단계별_정확도는_단계마다_따로_낸다():
 # ── 통합: 실제 합성 데이터 위의 베이스라인 (A) ──────────────────────────────
 pytestmark_data = pytest.mark.skipif(
     not DEFAULT_BUNDLE_DIR.exists() or not DEFAULT_TRUTH_PATH.exists(),
-    reason="합성 데이터가 없다 — `python -m txlens.generator --seed 42` (docs/recovery.md)",
+    reason="합성 데이터가 없다 — `python -m txlens.generator --seed 42` (README 참고)",
 )
 
 
@@ -314,9 +314,9 @@ def baseline():
 def test_룰이_확정한_것은_전부_정답이다(baseline):
     """룰의 실패 양식은 "틀림"이 아니라 "모름"이어야 한다.
 
-    이 테스트가 깨지면 **어느 단계가 남의 브랜드를 삼켰다**는 뜻이다 (D-024 의 `token_set_ratio`
+    이 테스트가 깨지면 **어느 단계가 남의 브랜드를 삼켰다**는 뜻이다 (앞서의 `token_set_ratio`
     사고가 정확히 이 형태였다). L2 평균 정확도로는 안 보인다 — 삼킨 쪽과 삼켜진 쪽이 같은 L2 를
-    공유하면 지표는 그대로이고 2부(구독 탐지)만 조용히 오염된다 (D-010).
+    공유하면 지표는 그대로이고 2부(구독 탐지)만 조용히 오염된다.
     """
     for stage in (MatchStage.EXACT, MatchStage.ALIAS, MatchStage.REGEX, MatchStage.FUZZY):
         if baseline.overall.by_stage.get(stage.value):
@@ -351,14 +351,14 @@ def test_PG마스킹이_미매칭보다_작지_않게_뭉뚱그려지지_않는�
 
 @pytestmark_data
 def test_tail_브랜드가_미매칭_상위를_채운다(baseline):
-    """사전이 head 만 담았다는 D-022 의 결과가 지표에도 나타나야 한다."""
+    """사전이 head 만 담았다는 사전 범위 설계의 결과가 지표에도 나타나야 한다."""
     names = {name for name, _, _ in baseline.unmatched_top}
     assert {"을지로호프", "낙원떡집"} <= names
 
 
 @pytestmark_data
 def test_기관별로_난이도가_다르다(baseline):
-    """제공기관을 한 덩어리로 보면 오염이 심한 기관의 실패가 평균에 묻힌다 (D-012)."""
+    """제공기관을 한 덩어리로 보면 오염이 심한 기관의 실패가 평균에 묻힌다."""
     coverages = {k: s.coverage for k, s in baseline.by_provider.items()}
     assert len(coverages) >= 3
     assert max(coverages.values()) - min(coverages.values()) > 0.1
