@@ -60,6 +60,22 @@ def _ignored(path: str) -> bool:
     return r.returncode == 0
 
 
+def _is_repo_root() -> bool:
+    """ROOT 가 git 저장소의 최상위인가. ZIP 으로 받은 사본에는 `.git` 이 없다."""
+    r = subprocess.run(
+        ["git", "rev-parse", "--show-toplevel"],
+        cwd=ROOT, capture_output=True, text=True, check=False,
+    )
+    return r.returncode == 0 and Path(r.stdout.strip()).resolve() == ROOT
+
+
+#: `git check-ignore` 는 저장소 밖에서 128 로 끝난다 — 그걸 "무시 안 됨"으로 읽으면 안 된다.
+needs_git = pytest.mark.skipif(
+    not _is_repo_root(), reason="git 저장소가 아니다 (ZIP 사본) — .gitignore 판정은 git 이 한다"
+)
+
+
+@needs_git
 @pytest.mark.parametrize("path", MUST_IGNORE)
 def test_regenerable_and_secret_paths_are_ignored(path):
     assert _ignored(path), (
@@ -67,6 +83,7 @@ def test_regenerable_and_secret_paths_are_ignored(path):
     )
 
 
+@needs_git
 @pytest.mark.parametrize("path", MUST_TRACK)
 def test_hand_made_assets_are_not_ignored(path):
     assert not _ignored(path), f"{path} 는 커밋되어야 하는데 무시된다"
